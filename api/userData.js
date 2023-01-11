@@ -4,15 +4,18 @@ import { clientCredentials } from '../utils/client';
 const dbUrl = clientCredentials.databaseURL;
 
 const getUserByUid = (uid) => new Promise((resolve, reject) => {
-  axios.get(`${dbUrl}/users.json?orderBy="uid"&equalTo="${uid}"`)
-    .then((response) => {
-      if (response.data) {
-        resolve(Object.values(response.data)[0]);
-      } else {
-        resolve({});
-      }
-    })
-    .catch((error) => reject(error));
+  fetch('http://localhost:8000/checkuser', {
+    method: 'POST',
+    body: JSON.stringify({
+      uid,
+    }),
+    headers: {
+      'Content-Type': 'application/json',
+      Accept: 'application/json',
+    },
+  })
+    .then((resp) => resolve(resp.json()))
+    .catch(reject);
 });
 
 const createUser = (userObj) => new Promise((resolve, reject) => {
