@@ -1,0 +1,900 @@
+@import 'bootstrap/dist/css/bootstrap.css';
+@import url('https://fonts.googleapis.com/css2?family=Mochiy+Pop+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300&display=swap');
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #254343 !important;
+}
+
+.cardImage {
+  object-fit: cover;
+  width: 100%;
+  min-height: 50%;
+}
+
+.flickCardDiv {
+  box-shadow: #000000ad 4px 4px 8px;
+  border: none;
+  height: 100%;
+  background-color: #68797b !important;
+  color: #d3dfe1 !important;
+}
+
+.shuffleCardDiv {
+  box-shadow: #000000ad 4px 4px 8px !important;
+  border: none;
+  height: 100%;
+  background-color: #68797b !important;
+  color: #d3dfe1 !important;
+}
+
+.cardBody {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  height: 100%;
+}
+
+.flickCardBtns {
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: auto;
+}
+
+.mainMoodsDiv {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-around;
+  margin-left: 175px;
+  margin-right: 100px;
+  margin-top: 50px;
+  margin-bottom: 50px;
+  color: #d3dfe1 !important;
+}
+
+.anxiousIcon {
+  justify-self: center;
+  height: 200px;
+  width: 200px;
+}
+
+.anxiousIconDiv {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-right: 100px;
+}
+
+.blahIcon {
+  justify-self: center;
+  height: 170px;
+  width: 170px;
+  margin-top: 15px;
+  margin-bottom: 25px;
+}
+
+.blahIconDiv {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-right: 100px;
+}
+
+.boredIcon {
+  justify-self: center;
+  height: 200px;
+  width: 200px;
+}
+
+.boredIconDiv {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-right: 100px;
+}
+
+.buzzedIcon {
+  justify-self: center;
+  height: 200px;
+  width: 200px;
+}
+
+.buzzedIconDiv {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-right: 100px;
+}
+
+.chillIcon {
+  justify-self: center;
+  height: 175px;
+  width: 175px;
+  margin-bottom: 20px;
+  margin-top: 10px;
+}
+
+.chillIconDiv {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-right: 100px;
+}
+
+.happyIcon {
+  justify-self: center;
+  height: 200px;
+  width: 200px;
+}
+
+.happyIconDiv {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-right: 100px;
+}
+
+.heartbrokenIcon {
+  justify-self: center;
+  height: 175px;
+  width: 175px;
+  margin-top: 10px;
+  margin-bottom: 15px;
+}
+
+.heartbrokenIconDiv {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-right: 100px;
+}
+
+.highIcon {
+  justify-self: center;
+  height: 200px;
+  width: 200px;
+}
+
+.highIconDiv {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-right: 100px;
+}
+
+.mischievousIcon {
+  justify-self: center;
+  height: 50px;
+  width: 50px;
+  margin-bottom: 15px;
+}
+
+.mischievousIconDiv {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-right: 100px;
+}
+
+.moodyIcon {
+  justify-self: center;
+  height: 200px;
+  width: 200px;
+  margin-bottom: 10px;
+}
+
+.moodyIconDiv {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-right: 100px;
+}
+
+.nostalgicIcon {
+  justify-self: center;
+  height: 200px;
+  width: 200px;
+}
+
+.nostalgicIconDiv {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-right: 100px;
+}
+
+.mischievousIcon {
+  justify-self: center;
+  height: 200px;
+  width: 200px;
+}
+
+.mischievousIconDiv {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-right: 100px;
+}
+
+.sadIcon {
+  justify-self: center;
+  height: 200px;
+  width: 200px;
+}
+
+.sadIconDiv {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-right: 100px;
+}
+
+.sickIcon {
+  justify-self: center;
+  height: 200px;
+  width: 200px;
+}
+
+.sickIconDiv {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-right: 100px;
+}
+
+.sillyIcon {
+  justify-self: center;
+  height: 200px;
+  width: 200px;
+}
+
+.sillyIconDiv {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-right: 80px;
+}
+
+.sadIcon {
+  justify-self: center;
+  height: 200px;
+  width: 200px;
+}
+
+.sadIconDiv {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-right: 80px;
+}
+
+.stressedIcon {
+  justify-self: center;
+  height: 200px;
+  width: 200px;
+}
+
+.stressedIconDiv {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-right: 80px;
+}
+
+.wistfulIcon {
+  justify-self: center;
+  height: 175px;
+  width: 175px;
+  margin-right: 10px;
+  margin-top: 10px;
+  margin-bottom: 15px;
+}
+
+.wistfulIconDiv {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-right: 80px;
+}
+
+.loginPage {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-flow: column wrap;
+  margin-top: 250px;
+  margin-bottom: 20px;
+  color: #d3dfe1 !important;
+}
+
+.loginButton {
+  border: none;
+  background-color: transparent;
+  color: #d3dfe1 !important;
+}
+
+.loginButton:hover {
+  border-style: solid;
+  border-color: #d3dfe1 !important;
+  border-radius: 6px;
+  padding: 3px;
+  color: #d3dfe1 !important;
+}
+
+.homePage {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-flow: column wrap;
+  margin-top: 150px;
+  color: #d3dfe1 !important;
+}
+
+.linkIconDiv {
+  display: flex;
+  flex-direction: row;
+  margin-top: 60px;
+}
+
+.watchlistIconDiv {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-right: 70px;
+}
+
+.watchlistIcon {
+  height: 150px;
+  width: 150px;
+  padding: 0;
+  margin: 0;
+}
+
+.shuffleIconDiv {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-right: 70px;
+}
+
+.shuffleIcon {
+  height: 150px;
+  width: 150px;
+  padding: 0;
+  margin: 0;
+}
+
+.moodsIconDiv {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.moodsIcon {
+  height: 150px;
+  width: 150px;
+  padding: 0;
+  margin: 0;
+}
+
+.noFlicksDiv {
+  display: block;
+  margin-top: 50px;
+  color: #d3dfe1 !important;
+}
+
+.noFlicksFound {
+  display: block;
+  text-align: center;
+  margin-top: 100px;
+  color: #d3dfe1 !important;
+}
+
+.noFlicksBtn {
+  display: block;
+  margin-top: 50px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.foundFlicksBtn {
+  margin-top: 50px;
+  margin-left: 130px;
+}
+
+.moodsCardsDiv {
+  margin-top: 50px;
+  margin-left: 110px;
+  margin-right: 100px;
+}
+
+.watchlistCardDiv {
+  margin-top: 30px;
+  margin-left: 110px;
+  margin-right: 100px;
+}
+
+.watchlistSearchbar {
+  margin-left: auto;
+  margin-right: auto;
+  width: 300px;
+  margin-top: 30px;
+  margin-bottom: 20px;
+}
+
+.filterGenre {
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  width: 300px;
+}
+
+.noRecsDiv {
+  text-align: center;
+  margin-top: 50px;
+}
+
+.recommendationHeader {
+  text-align: center;
+  margin-top: 50px;
+  margin-bottom: 30px;
+  color: #d3dfe1 !important;
+}
+
+.recommendationCardDiv {
+  margin-top: 50px;
+  margin-left: 110px;
+  margin-right: 100px;
+}
+
+ .shuffleFormDiv {
+  margin-top: 50px;
+  display: flex;
+  flex-direction: column;  
+  align-items: center;
+ }
+
+ .iFeelLike {
+  margin-bottom: 20px;
+  color: #d3dfe1 !important;
+  margin-left: -100px;
+ }
+
+ .typeSelect {
+  width: 450px;
+ }
+
+ .statusSelect {
+  width: 450px;
+ }
+
+ .recommendedByField {
+  width: 400px;
+  margin-bottom: 25px;
+ }
+
+ .genreDiv {
+  columns: 2 auto;
+  margin-bottom: 20px;
+  margin-top: 20px;
+  column-gap: 100px;
+  margin-left: 30px;
+  color: #d3dfe1 !important;
+ }
+
+ .moodDiv {
+  columns: 2 auto;
+  margin-bottom: 10px;
+  margin-top: 20px;
+  column-gap: 145px;
+  margin-left: -5px;
+  color: #d3dfe1 !important;
+ }
+
+ .flickFormContainer {
+  margin-top: 50px;
+  display: flex;
+  flex-direction: column;  
+  align-items: center;
+  color: #d3dfe1 !important;
+ }
+
+ .genreDivFlick {
+  columns: 2 auto;
+  margin-bottom: 20px;
+  margin-top: 20px;
+  column-gap: 100px;
+  margin-left: 30px;
+ }
+
+ .moodDivFlick {
+  columns: 2 auto;
+  margin-bottom: 10px;
+  margin-top: 20px;
+  column-gap: 100px;
+  margin-left: 30px;
+ }
+
+ .flickHeaderText {
+  margin-bottom: 20px;;
+ }
+
+ .flickFormButton {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: transparent;
+  border: none;
+  color: #b6c3c7 !important;
+  margin-bottom: 30px;
+ }
+
+ .photoUrlFlick {
+  margin-top: 10px;
+ }
+
+ .shuffleGenre {
+  margin-left: -390px;
+  margin-bottom: -10px;
+  color: #d3dfe1 !important;
+ }
+
+ .shuffleMood {
+  margin-left: -390px;
+  margin-bottom: -10px;
+  color: #d3dfe1 !important;
+ }
+
+ .shuffleResultDiv {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 50px;
+ }
+
+ .tryAgainButton {
+  margin-left: -315px;
+  margin-bottom: 20px;
+ }
+
+ .moodsHeader {
+  text-align: center;
+  margin-top: 50px;
+ }
+
+ .watchlistHeader {
+  margin-top: 50px;
+  color: #d3dfe1 !important;
+ }
+
+ .cardDetails {
+  text-align: left;
+  margin-left: 20px;
+ }
+
+ .watchTitleShuffle {
+  text-align: center;
+ }
+
+ .flickCardBody {
+  height: 400px;
+ }
+
+ .recommendationTitle {
+  text-align: center;
+ }
+
+ .flickTitle {
+  text-align: center;
+ }
+
+ .recommendationCardDiv {
+  margin-bottom: 30px;
+ }
+
+ .profileCardDiv {
+  display: flex;
+  align-items: center;
+  flex-flow: column;
+  color: #b6c3c7 !important;
+ }
+
+ .favoritedFlicksDiv {
+  display: flex;
+  flex-direction: row wrap;
+  margin-left: 100px;
+  margin-right: 100px;
+  margin-top: 5px;
+ }
+
+ .profileBtn {
+  margin-top: 50px;
+  margin-bottom: 30px;
+ }
+
+ .userProfileDiv {
+  display: flex;
+  align-items: center;
+  flex-flow: column wrap;
+  color: #b6c3c7 !important;
+ }
+
+ .favGenres {
+  width: 175px;
+  margin-bottom: 10px;
+ }
+
+ .profileButton {
+  border: none;
+  background-color: transparent;
+  color: #b6c3c7 !important;
+ }
+
+ .watchlistButton {
+  border: none;
+  background-color: transparent;
+  color: #b6c3c7 !important;
+ }
+
+ .navBarStyle {
+  background-color: #111b1b!important;
+  color: #d3dfe1 !important;
+ }
+
+ .moodsHeader {
+  color: #d3dfe1 !important;
+ }
+
+ .homePage {
+  color: #b6c3c7 !important;
+ }
+
+ .profileDropdown {
+  background-color: #68797b !important;
+  color: #d3dfe1 !important;
+ }
+
+ .profileDropdownBottomDiv {
+  background-color: #68797b !important;
+  color: #d3dfe1 !important;
+ }
+
+ .dropdown-menu {
+  background-color: #68797b !important;
+  color: #d3dfe1 !important;
+  text-align: center;
+  margin-top: 10px;
+ }
+
+ .goToProfileBtn {
+  color: #d3dfe1 !important;
+ }
+
+ .signOutBtn {
+  color: #d3dfe1 !important;
+ }
+
+ .profileName {
+  margin-top: 15px;
+  margin-left: 15px;
+  margin-right: 15px;
+ }
+
+ .profilePageForm {
+  color: #d3dfe1 !important;
+  display: flex;
+  justify-content: center;
+  margin-top: 50px;
+ }
+
+ .favGenresList {
+  columns: 2 auto;
+  margin-bottom: 20px;
+ }
+
+ .favGenresHeader {
+  margin-top: 20px;
+  margin-bottom: 20px;
+ }
+
+ .submitProfileBtn {
+  margin-bottom: 30px;
+  border: none;
+  background-color: transparent;
+  color: #d3dfe1 !important;
+ }
+
+ .updateProfileHeader {
+  margin-bottom: 20px;
+ }
+
+ .submitProfileButtonDiv {
+  display: flex;
+  justify-content: center;
+ }
+
+ .flickFormContainer {
+  color: #b6c3c7 !important;
+ }
+
+ .submitShuffleFormBtn {
+  background-color: transparent;
+  border: none;
+  margin-bottom: 30px;
+  color: #d3dfe1 !important;
+ }
+
+ .flickButton {
+  background-color: transparent;
+  border: none;
+  color: #d3dfe1 !important;
+ }
+
+ .editButton {
+  border: none;
+  background-color: transparent;
+  color: #d3dfe1 !important;
+ }
+
+ .deleteButton {
+  border: none;
+  background-color: transparent;
+  color: #d3dfe1 !important;
+ }
+
+ .poppedTilte {
+  cursor: pointer !important;
+ }
+
+ .tryAgainDiv {
+  text-align: center;
+  margin-top: 100px;
+ }
+
+ .noFlicksRec {
+  margin-bottom: 30px;
+  color: #d3dfe1 !important;
+ }
+
+ .tryAgainBtn {
+  border-style: solid;
+  border-radius: 6px;
+  border-color: #d3dfe1 !important;
+  background-color: transparent;
+  color: #d3dfe1 !important;
+  border-width: 1px;
+ }
+
+ .tryAgainBtn:hover {
+  border-width: 1.5px;
+ }
+
+ .backToMoodsBtn {
+  border-style: solid;
+  border-radius: 6px;
+  border-color: #d3dfe1 !important;
+  background-color: transparent;
+  color: #d3dfe1 !important;
+  border-width: 1px;
+ }
+
+ .backToMoodsBtn:hover {
+  border-width: 1.5px;
+ }
+
+ .tryAgainButton {
+  border-style: solid;
+  border-radius: 6px;
+  border-color: #d3dfe1 !important;
+  background-color: transparent;
+  color: #d3dfe1 !important;
+  border-width: 1px;
+ }
+
+ .tryAgainButton:hover {
+  border-width: 1.5px;
+ }
+
+ .poppedTitle {
+  margin-top: 5px;
+  margin-bottom: -2px;
+  margin-right: -5px;
+ }
+
+ .welcomeMain {
+  margin-bottom: -25px;
+ }
+
+ .loginWelcome {
+  margin-bottom: -25px;
+ }
+
+ button {
+  background-color: transparent;
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
+
+.on {
+  color: #d4bc6c;
+}
+
+.off {
+  color: #849597;
+}
+
+.profilePagePic {
+  object-fit: cover;
+  height: 300px;
+  width: 300px;
+}
+
+.profileDropdownPic {
+  object-fit: cover;
+  height: 100px;
+  width: 100px;
+}
+
+.user-icon {
+  object-fit: cover;
+}
+
+.dropdown-menu {
+  width: 200px;
+}

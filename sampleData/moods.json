@@ -1,0 +1,66 @@
+[
+  {
+    "moodFirebaseKey": "4bfbdef1-43fd-448b-9cce-1fadf7afb871",
+    "moodsName": "Anxious"
+  },
+  {
+    "moodFirebaseKey": "0fd3b5ff-4691-4559-b75c-791889c9bf2a",
+    "moodsName": "Blah"
+  },
+  {
+    "moodFirebaseKey": "a6625b36-0913-4d06-b799-abe696d3a4be",
+    "moodsName": "Bored"
+  },
+  {
+    "moodFirebaseKey": "0728d960-b0e8-4ad7-97ac-d38f038bbb22",
+    "moodsName": "Buzzed"
+  },
+  {
+    "moodFirebaseKey": "f0de1081-1c25-4604-ae29-4939721e67d5",
+    "moodsName": "Chill"
+  },
+  {
+    "moodFirebaseKey": "2945b48e-22ac-47f6-82ce-d44c9b66a34hghg",
+    "moodsName": "Happy"
+  },
+  {
+    "moodFirebaseKey": "2945b48e-22ac-47f6-82ce-d44c9b66a656",
+    "moodsName": "Heartbroken"
+  },
+  {
+    "moodFirebaseKey": "12cd64fd-787b-47e3-a97a-48ce09406bb9",
+    "moodsName": "High"
+  },
+  {
+    "moodFirebaseKey": "6c0d6765-a366-48aa-9341-a714fa69ab49",
+    "moodsName": "Mischievous"
+  },
+  {
+    "moodFirebaseKey": "d205c2c7-091d-40fd-934e-ea828deaab3e",
+    "moodsName": "Moody"
+  },
+  {
+    "moodFirebaseKey": "ccec3742-1583-434b-8eb4-9ad777fb586c",
+    "moodsName": "Nostalgic"
+  },
+  {
+    "moodFirebaseKey": "056b07d6-6ccc-4593-89bc-b167b95a3958",
+    "moodsName": "Sad"
+  },
+  {
+    "moodFirebaseKey": "4c96a814-e892-40b3-bf36-5abde21cc1c8",
+    "moodsName": "Sick"
+  },
+  {
+    "moodFirebaseKey": "e8aeaa75-a9ba-4ba9-b2dc-5968192cf984",
+    "moodsName": "Silly"
+  },
+  {
+    "moodFirebaseKey": "5e381379-54e6-44d3-b9a8-042da8b62998",
+    "moodsName": "Stressed"
+  },
+  {
+    "moodFirebaseKey": "053b47c2-9029-4cbd-952e-e65ca9a761c7",
+    "moodsName": "Wistful"
+  }
+]
