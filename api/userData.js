@@ -36,6 +36,24 @@ const createUser = (user) => new Promise((resolve, reject) => {
     .catch((error) => reject(error));
 });
 
+const getUserByUserId = (id) => new Promise((resolve, reject) => {
+  fetch(`${dbUrl}/flicks/${id}`)
+    .then((response) => response.json())
+    .then((data) => {
+      resolve({
+        id: data.id,
+        title: data.title,
+        type: data.type,
+        watched: data.watched,
+        favorite: data.favorite,
+        image_url: data.imageUrl,
+        rating: data.rating,
+        uid: data.uid,
+      });
+    })
+    .catch((error) => reject(error));
+});
+
 const deleteSingleUser = (id) => new Promise((resolve, reject) => {
   fetch(`${dbUrl}/users/${id}`, {
     method: 'DELETE',
@@ -67,4 +85,5 @@ export {
   createUser,
   deleteSingleUser,
   updateUser,
+  getUserByUserId,
 };
