@@ -3,12 +3,12 @@ import { clientCredentials } from '../utils/client';
 import { getFlicksByUid, getSingleFlick } from './flicksData';
 import { getGenresByGenreFirebaseKey } from './genresData';
 import { getMoodsByMoodFirebaseKey } from './moodsData';
-import { getSingleUser, getUserByUid } from './userData';
+import { getUserByUid } from './userData';
 
 const dbUrl = clientCredentials.databaseURL;
 
 const createUserGenre = (newUserGenreObj) => new Promise((resolve, reject) => {
-  axios.post(`${dbUrl}/user_genres.json`, newUserGenreObj)
+  fetch(`${dbUrl}/user_genres.json`, newUserGenreObj)
     .then((response) => {
       const body = { firebaseKey: response.data.name };
       axios.patch(`${dbUrl}/user_genres/${response.data.name}.json`, body)
@@ -17,20 +17,20 @@ const createUserGenre = (newUserGenreObj) => new Promise((resolve, reject) => {
     });
 });
 
-const getUserGenresForUser = async (userFirebaseKey) => {
-  const response = await axios.get(`${dbUrl}/user_genres.json?orderBy="userFirebaseKey"&equalTo="${userFirebaseKey}"`);
+const getUserGenresForUser = async (id) => {
+  const response = await fetch(`${dbUrl}/user_genres.json?orderBy="id"&equalTo="${id}"`);
   return JSON.stringify(response.data) === '{}' ? [] : Object.values(response.data);
 };
 
-const getGenresForUser = async (userFirebaseKey) => {
-  const userGenres = await getUserGenresForUser(userFirebaseKey);
-  const promises = userGenres.map((userGenre) => getGenresByGenreFirebaseKey(userGenre.genreFirebaseKey));
+const getGenresForUser = async (id) => {
+  const userGenres = await getUserGenresForUser(id);
+  const promises = userGenres.map((userGenre) => getGenresByGenreFirebaseKey(userGenre.genreId));
   return Promise.all(promises);
 };
 
-const getSingleUserWithMetaData = async (userFirebaseKey) => {
-  const user = await getSingleUser(userFirebaseKey);
-  const genres = await getGenresForUser(userFirebaseKey);
+const getSingleUserWithMetaData = async (id) => {
+  const user = await getUserByUid(id);
+  const genres = await getGenresForUser(id);
   return {
     ...user,
     genres,
@@ -38,7 +38,7 @@ const getSingleUserWithMetaData = async (userFirebaseKey) => {
 };
 
 const deleteUserGenre = (firebaseKey) => new Promise((resolve, reject) => {
-  axios.delete(`${dbUrl}/user_genres/${firebaseKey}.json`)
+  fetch(`${dbUrl}/user_genres/${firebaseKey}.json`)
     .then(resolve)
     .catch(reject);
 });
@@ -71,30 +71,30 @@ const getUserByUidWithMetaData = async (uid) => {
   };
 };
 
-const getFlickGenresForFlick = async (flickFirebaseKey) => {
-  const response = await axios.get(`${dbUrl}/flick_genres.json?orderBy="flickFirebaseKey"&equalTo="${flickFirebaseKey}"`);
+const getFlickGenresForFlick = async (id) => {
+  const response = await fetch(`${dbUrl}/flick_genres.json?orderBy="id"&equalTo="${id}"`);
   return JSON.stringify(response.data) === '{}' ? [] : Object.values(response.data);
 };
 
-const getGenresForFlick = async (flickFirebaseKey) => {
-  const flickGenres = await getFlickGenresForFlick(flickFirebaseKey);
+const getGenresForFlick = async (id) => {
+  const flickGenres = await getFlickGenresForFlick(id);
   const promises = flickGenres.map((flickGenre) => getGenresByGenreFirebaseKey(flickGenre.genreFirebaseKey));
   return Promise.all(promises);
 };
 
-const getFlickMoodsForFlick = async (flickFirebaseKey) => {
-  const response = await axios.get(`${dbUrl}/flick_moods.json?orderBy="flickFirebaseKey"&equalTo="${flickFirebaseKey}"`);
+const getFlickMoodsForFlick = async (id) => {
+  const response = await fetch(`${dbUrl}/flick_moods.json?orderBy="id"&equalTo="${id}"`);
   return JSON.stringify(response.data) === '{}' ? [] : Object.values(response.data);
 };
 
-const getMoodsForFlick = async (flickFirebaseKey) => {
-  const flickMoods = await getFlickMoodsForFlick(flickFirebaseKey);
+const getMoodsForFlick = async (id) => {
+  const flickMoods = await getFlickMoodsForFlick(id);
   const promises = flickMoods.map((flickMood) => getMoodsByMoodFirebaseKey(flickMood.moodFirebaseKey));
   return Promise.all(promises);
 };
 
 const createFlickGenre = (flickGenreObj) => new Promise((resolve, reject) => {
-  axios.post(`${dbUrl}/flick_genres.json`, flickGenreObj)
+  fetch(`${dbUrl}/flick_genres.json`, flickGenreObj)
     .then((response) => {
       const body = { firebaseKey: response.data.name };
       axios.patch(`${dbUrl}/flick_genres/${response.data.name}.json`, body)
@@ -104,13 +104,13 @@ const createFlickGenre = (flickGenreObj) => new Promise((resolve, reject) => {
 });
 
 const deleteFlickGenre = (firebaseKey) => new Promise((resolve, reject) => {
-  axios.delete(`${dbUrl}/flick_genres/${firebaseKey}.json`)
+  fetch(`${dbUrl}/flick_genres/${firebaseKey}.json`)
     .then(resolve)
     .catch(reject);
 });
 
 const getFlickMoods = () => new Promise((resolve, reject) => {
-  axios.get(`${dbUrl}/flick_moods`)
+  fetch(`${dbUrl}/flick_moods`)
     .then((response) => {
       if (response.data) {
         resolve(Object.values(response.data));
@@ -122,7 +122,7 @@ const getFlickMoods = () => new Promise((resolve, reject) => {
 });
 
 const createFlickMood = (flickMoodsObj) => new Promise((resolve, reject) => {
-  axios.post(`${dbUrl}/flick_moods.json`, flickMoodsObj)
+  fetch(`${dbUrl}/flick_moods.json`, flickMoodsObj)
     .then((response) => {
       const body = { firebaseKey: response.data.name };
       axios.patch(`${dbUrl}/flick_moods/${response.data.name}.json`, body)
@@ -134,7 +134,7 @@ const createFlickMood = (flickMoodsObj) => new Promise((resolve, reject) => {
 });
 
 const deleteFlickMood = (firebaseKey) => new Promise((resolve, reject) => {
-  axios.delete(`${dbUrl}/flick_moods/${firebaseKey}.json`)
+  fetch(`${dbUrl}/flick_moods/${firebaseKey}.json`)
     .then(resolve)
     .catch(reject);
 });
@@ -151,7 +151,7 @@ const updateFlickGenres = async (flick, checkedGenres) => {
   });
 
   const addPromises = genresToAdd.map(async (genreToAdd) => {
-    const flickGenre = { flickFirebaseKey: flick.flicksFirebaseKey, genreFirebaseKey: genreToAdd.genreFirebaseKey };
+    const flickGenre = { id: flick.flicksFirebaseKey, genreFirebaseKey: genreToAdd.genreFirebaseKey };
     return createFlickGenre(flickGenre);
   });
 
@@ -170,7 +170,7 @@ const updateFlickMoods = async (flick, checkedMoods) => {
   });
 
   const addPromises = moodsToAdd.map(async (moodToAdd) => {
-    const flickMood = { flickFirebaseKey: flick.flicksFirebaseKey, moodFirebaseKey: moodToAdd.moodFirebaseKey };
+    const flickMood = { id: flick.flicksFirebaseKey, moodFirebaseKey: moodToAdd.moodFirebaseKey };
     return createFlickMood(flickMood);
   });
 

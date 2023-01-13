@@ -4,7 +4,7 @@ import { clientCredentials } from '../utils/client';
 const dbUrl = clientCredentials.databaseURL;
 
 const getGenresByUid = (uid) => new Promise((resolve, reject) => {
-  axios.get(`${dbUrl}/genres.json?orderBy="uid"&equalTo="${uid}"`)
+  fetch(`${dbUrl}/genres.json?orderBy="uid"&equalTo="${uid}"`)
     .then((response) => {
       if (response.data) {
         resolve(Object.values(response.data));
@@ -16,7 +16,7 @@ const getGenresByUid = (uid) => new Promise((resolve, reject) => {
 });
 
 const getGenres = () => new Promise((resolve, reject) => {
-  axios.get(`${dbUrl}/genres.json`)
+  fetch(`${dbUrl}/genres.json`)
     .then((response) => {
       if (response.data) {
         resolve(Object.values(response.data));
@@ -28,7 +28,7 @@ const getGenres = () => new Promise((resolve, reject) => {
 });
 
 const createGenre = (genreObj) => new Promise((resolve, reject) => {
-  axios.post(`${dbUrl}/genres.json?`, genreObj)
+  fetch(`${dbUrl}/genres.json?`, genreObj)
     .then((response) => {
       const payload = { genreFirebaseKey: response.data.genreFirebaseKey };
       axios.patch(`${dbUrl}/genres/${response.data.name}.json`, payload).then(() => {
@@ -38,13 +38,13 @@ const createGenre = (genreObj) => new Promise((resolve, reject) => {
 });
 
 const getSingleGenre = (firebaseKey) => new Promise((resolve, reject) => {
-  axios.get(`${dbUrl}/genres/${firebaseKey}.json`)
+  fetch(`${dbUrl}/genres/${firebaseKey}.json`)
     .then((response) => resolve(response.data))
     .catch((error) => reject(error));
 });
 
 const getSingleGenreByName = (genreName) => new Promise((resolve, reject) => {
-  axios.get(`${dbUrl}/genres.json?orderBy="genreName"&equalTo="${genreName}"`)
+  fetch(`${dbUrl}/genres.json?orderBy="genreName"&equalTo="${genreName}"`)
     .then((response) => {
       if (response.data) {
         resolve(Object.values(response.data)[0]);
@@ -56,13 +56,13 @@ const getSingleGenreByName = (genreName) => new Promise((resolve, reject) => {
 });
 
 const deleteSingleGenre = (firebaseKey) => new Promise((resolve, reject) => {
-  axios.delete(`${dbUrl}/genres/${firebaseKey}.json`)
+  fetch(`${dbUrl}/genres/${firebaseKey}.json`)
     .then((response) => resolve(response.data))
     .catch((error) => reject(error));
 });
 
 const getGenresByGenreFirebaseKey = (genreFirebaseKey) => new Promise((resolve, reject) => {
-  axios.get(`${dbUrl}/genres.json?orderBy="genreFirebaseKey"&equalTo="${genreFirebaseKey}"`)
+  fetch(`${dbUrl}/genres.json?orderBy="genreFirebaseKey"&equalTo="${genreFirebaseKey}"`)
     .then((response) => {
       if (response.data) {
         resolve(Object.values(response.data)[0]);
