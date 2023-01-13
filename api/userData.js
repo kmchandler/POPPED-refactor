@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { clientCredentials } from '../utils/client';
 
 const dbUrl = clientCredentials.databaseURL;
@@ -18,38 +17,54 @@ const getUserByUid = (uid) => new Promise((resolve, reject) => {
     .catch(reject);
 });
 
-const createUser = (userObj) => new Promise((resolve, reject) => {
-  axios.post(`${dbUrl}/users.json?`, userObj)
-    .then((response) => {
-      const payload = { userFirebaseKey: response.data.name };
-      axios.patch(`${dbUrl}/users/${response.data.name}.json`, payload).then(() => {
-        getUserByUid(userObj.uid).then((user) => resolve(user));
-      });
-    }).catch((error) => reject(error));
-});
-
-const getSingleUser = (userFirebaseKey) => new Promise((resolve, reject) => {
-  axios.get(`${dbUrl}/users/${userFirebaseKey}.json`)
-    .then((response) => resolve(response.data))
+const createUser = (user) => new Promise((resolve, reject) => {
+  const userObj = {
+    first_name: user.firstName,
+    last_name: user.lastName,
+    username: user.username,
+    image_url: user.imageUrl,
+    uid: user.uid,
+  };
+  fetch(`${dbUrl}/users`, {
+    method: 'POST',
+    body: JSON.stringify(userObj),
+    headers: {
+      'content-type': 'application/json',
+    },
+  })
+    .then((response) => resolve(response.json()))
     .catch((error) => reject(error));
 });
 
-const deleteSingleUser = (userFirebaseKey) => new Promise((resolve, reject) => {
-  axios.delete(`${dbUrl}/users/${userFirebaseKey}.json`)
-    .then((response) => resolve(response.data))
+const deleteSingleUser = (id) => new Promise((resolve, reject) => {
+  fetch(`${dbUrl}/users/${id}`, {
+    method: 'DELETE',
+    headers: { 'Content-Type': 'application/json' },
+  })
+    .then((response) => resolve(response))
     .catch((error) => reject(error));
 });
 
-const updateUser = (userObj) => new Promise((resolve, reject) => {
-  axios.patch(`${dbUrl}/users/${userObj.userFirebaseKey}.json`, userObj)
-    .then(() => getUserByUid(userObj.uid)).then(resolve)
-    .catch(reject);
+const updateUser = (user) => new Promise((resolve, reject) => {
+  const userObj = {
+    id: user.id,
+    first_name: user.firstName,
+    last_name: user.lastName,
+    username: user.username,
+    image_url: user.imageUrl,
+    uid: user.uid,
+  };
+  fetch(`${dbUrl}/users/${user.id}.json`, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(userObj),
+  })
+    .then((response) => resolve(response))
+    .catch((error) => reject(error));
 });
-
 export {
   getUserByUid,
   createUser,
-  getSingleUser,
   deleteSingleUser,
   updateUser,
 };

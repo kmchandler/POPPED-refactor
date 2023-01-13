@@ -18,11 +18,11 @@ export default function Profile() {
   const [profile, setProfile] = useState({});
   const [flicks, setFlicks] = useState([]);
   const router = useRouter();
-  const { userFirebaseKey } = router.query;
+  const { id } = router.query;
   const { user } = useAuth();
 
   const getTheUser = async () => {
-    const fetchedProfile = await getSingleUserWithMetaData(userFirebaseKey);
+    const fetchedProfile = await getSingleUserWithMetaData(id);
     setProfile(fetchedProfile);
   };
 

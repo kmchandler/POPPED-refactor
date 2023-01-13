@@ -12,11 +12,11 @@ import CreateUserForm from '../../../components/CreateUserForm';
 export default function EditUser() {
   const [editItem, setEditItem] = useState({});
   const router = useRouter();
-  const { userFirebaseKey } = router.query;
+  const { id } = router.query;
 
   useEffect(() => {
-    getSingleUserWithMetaData(userFirebaseKey).then(setEditItem);
-  }, [userFirebaseKey]);
+    getSingleUserWithMetaData(id).then(setEditItem);
+  }, [id]);
 
   return (<CreateUserForm obj={editItem} />);
 }
