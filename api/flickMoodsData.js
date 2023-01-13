@@ -3,7 +3,7 @@ import { clientCredentials } from '../utils/client';
 const dbUrl = clientCredentials.databaseURL;
 
 const getFlickMoods = () => new Promise((resolve, reject) => {
-  fetch(`${dbUrl}/flick_moods.json`)
+  fetch(`${dbUrl}/flick_moods`)
     .then((response) => {
       if (response.data) {
         resolve(Object.values(response.data));

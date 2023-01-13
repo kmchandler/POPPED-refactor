@@ -3,7 +3,7 @@ import { clientCredentials } from '../utils/client';
 const dbUrl = clientCredentials.databaseURL;
 
 const getFlickGenres = () => new Promise((resolve, reject) => {
-  fetch(`${dbUrl}/flick_genres.json`)
+  fetch(`${dbUrl}/flick_genres`)
     .then((response) => {
       if (response.data) {
         resolve(Object.values(response.data));
