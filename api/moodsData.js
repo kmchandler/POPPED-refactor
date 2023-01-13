@@ -3,7 +3,7 @@ import { clientCredentials } from '../utils/client';
 const dbUrl = clientCredentials.databaseURL;
 
 const getMoods = () => new Promise((resolve, reject) => {
-  fetch(`${dbUrl}/moods.json`)
+  fetch(`${dbUrl}/moods`)
     .then((response) => {
       if (response.data) {
         resolve(Object.values(response.data));
@@ -41,17 +41,17 @@ const getSingleMood = (id) => new Promise((resolve, reject) => {
     .catch((error) => reject(error));
 });
 
-const getSingleMoodByName = (moodsName) => new Promise((resolve, reject) => {
-  fetch(`${dbUrl}/moods.json?orderBy="moodsName"&equalTo="${moodsName}"`)
-    .then((response) => response.json())
-    .then((data) => {
-      resolve({
-        genre_id: data.id,
-        genre_name: data.genreName,
-      });
-    })
-    .catch((error) => reject(error));
-});
+// const getSingleMoodByName = (moodName) => new Promise((resolve, reject) => {
+//   fetch(`${dbUrl}/moods`)
+//     .then((response) => response.json())
+//     .then((data) => {
+//       resolve({
+//         mood_id: data.id,
+//         mood_name: data.moodName,
+//       });
+//     })
+//     .catch((error) => reject(error));
+// });
 
 const deleteSingleMood = (id) => new Promise((resolve, reject) => {
   fetch(`${dbUrl}/moods/${id}`, {
@@ -66,6 +66,6 @@ export {
   createMood,
   getSingleMood,
   deleteSingleMood,
-  getSingleMoodByName,
+  // getSingleMoodByName,
   getMoods,
 };
