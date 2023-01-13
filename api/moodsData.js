@@ -1,19 +1,6 @@
-import axios from 'axios';
 import { clientCredentials } from '../utils/client';
 
 const dbUrl = clientCredentials.databaseURL;
-
-const getMoodsByUid = (uid) => new Promise((resolve, reject) => {
-  fetch(`${dbUrl}/moods.json?orderBy="uid"&equalTo="${uid}"`)
-    .then((response) => {
-      if (response.data) {
-        resolve(Object.values(response.data));
-      } else {
-        resolve([]);
-      }
-    })
-    .catch((error) => reject(error));
-});
 
 const getMoods = () => new Promise((resolve, reject) => {
   fetch(`${dbUrl}/moods.json`)
@@ -27,58 +14,58 @@ const getMoods = () => new Promise((resolve, reject) => {
     .catch((error) => reject(error));
 });
 
-const createMood = (moodObj) => new Promise((resolve, reject) => {
-  fetch(`${dbUrl}/moods.json?`, moodObj)
-    .then((response) => {
-      const payload = { moodFirebaseKey: response.data.name };
-      axios.patch(`${dbUrl}/moods/${response.data.name}.json`, payload).then(() => {
-        getMoodsByUid(moodObj.uid).then((userArray) => resolve(userArray));
-      });
-    }).catch((error) => reject(error));
+const createMood = (mood) => new Promise((resolve, reject) => {
+  const moodObj = {
+    mood_name: mood.moodName,
+  };
+  fetch(`${dbUrl}/moods`, {
+    method: 'POST',
+    body: JSON.stringify(moodObj),
+    headers: {
+      'content-type': 'application/json',
+    },
+  })
+    .then((response) => resolve(response.json()))
+    .catch((error) => reject(error));
 });
 
-const getSingleMood = (firebaseKey) => new Promise((resolve, reject) => {
-  fetch(`${dbUrl}/moods/${firebaseKey}.json`)
-    .then((response) => resolve(response.data))
+const getSingleMood = (id) => new Promise((resolve, reject) => {
+  fetch(`${dbUrl}/moods/${id}`)
+    .then((response) => response.json())
+    .then((data) => {
+      resolve({
+        mood_id: data.id,
+        mood_name: data.moodName,
+      });
+    })
     .catch((error) => reject(error));
 });
 
 const getSingleMoodByName = (moodsName) => new Promise((resolve, reject) => {
   fetch(`${dbUrl}/moods.json?orderBy="moodsName"&equalTo="${moodsName}"`)
-    .then((response) => {
-      if (response.data) {
-        resolve(Object.values(response.data)[0]);
-      } else {
-        resolve({});
-      }
+    .then((response) => response.json())
+    .then((data) => {
+      resolve({
+        genre_id: data.id,
+        genre_name: data.genreName,
+      });
     })
-    .catch(reject);
-});
-
-const deleteSingleMood = (firebaseKey) => new Promise((resolve, reject) => {
-  fetch(`${dbUrl}/moods/${firebaseKey}.json`)
-    .then((response) => resolve(response.data))
     .catch((error) => reject(error));
 });
 
-const getMoodsByMoodFirebaseKey = (moodFirebaseKey) => new Promise((resolve, reject) => {
-  fetch(`${dbUrl}/moods.json?orderBy="moodFirebaseKey"&equalTo="${moodFirebaseKey}"`)
-    .then((response) => {
-      if (response.data) {
-        resolve(Object.values(response.data)[0]);
-      } else {
-        resolve([]);
-      }
-    })
+const deleteSingleMood = (id) => new Promise((resolve, reject) => {
+  fetch(`${dbUrl}/moods/${id}`, {
+    method: 'DELETE',
+    headers: { 'Content-Type': 'application/json' },
+  })
+    .then((response) => resolve(response))
     .catch((error) => reject(error));
 });
 
 export {
-  getMoodsByUid,
   createMood,
   getSingleMood,
   deleteSingleMood,
   getSingleMoodByName,
   getMoods,
-  getMoodsByMoodFirebaseKey,
 };

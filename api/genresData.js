@@ -2,18 +2,6 @@ import { clientCredentials } from '../utils/client';
 
 const dbUrl = clientCredentials.databaseURL;
 
-const getGenresByUid = (uid) => new Promise((resolve, reject) => {
-  fetch(`${dbUrl}/genres/"${uid}"`)
-    .then((response) => response.json())
-    .then((data) => {
-      resolve({
-        genre_id: data.id,
-        genre_name: data.genreName,
-      });
-    })
-    .catch((error) => reject(error));
-});
-
 const getGenres = () => new Promise((resolve, reject) => {
   fetch(`${dbUrl}/genres`)
     .then((response) => response.json())
@@ -70,7 +58,6 @@ const deleteSingleGenre = (id) => new Promise((resolve, reject) => {
 });
 
 export {
-  getGenresByUid,
   createGenre,
   getSingleGenre,
   deleteSingleGenre,
