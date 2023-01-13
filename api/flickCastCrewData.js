@@ -16,7 +16,7 @@ const getFlickCastCrews = () => new Promise((resolve, reject) => {
 
 const createFlickCastCrew = (flickCastCrew) => new Promise((resolve, reject) => {
   const flickCastCrewObj = {
-    flick_id: flickCastCrew.id,
+    flick_id: flickCastCrew.flickId,
     cast_crew: flickCastCrew.castCrew,
   };
   fetch(`${dbUrl}/flick_cast_crew`, {
@@ -35,7 +35,8 @@ const getSingleFlickCastCrew = (id) => new Promise((resolve, reject) => {
     .then((response) => response.json())
     .then((data) => {
       resolve({
-        flick_id: data.id,
+        id: data.id,
+        flick_id: data.flickId,
         cast_crew: data.castCrew,
       });
     })
