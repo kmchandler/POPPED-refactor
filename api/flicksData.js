@@ -14,6 +14,24 @@ const getFlicksByUid = (uid) => new Promise((resolve, reject) => {
     .catch((error) => reject(error));
 });
 
+const getSingleFlick = (id) => new Promise((resolve, reject) => {
+  fetch(`${dbUrl}/flicks/${id}`)
+    .then((response) => response.json())
+    .then((data) => {
+      resolve({
+        id: data.id,
+        title: data.title,
+        type: data.type,
+        watched: data.watched,
+        favorite: data.favorite,
+        image_url: data.imageUrl,
+        rating: data.rating,
+        uid: data.uid,
+      });
+    })
+    .catch((error) => reject(error));
+});
+
 const createFlick = (flick) => new Promise((resolve, reject) => {
   const flickObj = {
     title: flick.title,
@@ -66,6 +84,7 @@ const updateFlick = (flick) => new Promise((resolve, reject) => {
 
 export {
   getFlicksByUid,
+  getSingleFlick,
   createFlick,
   deleteSingleFlick,
   updateFlick,
