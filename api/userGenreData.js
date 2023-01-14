@@ -43,7 +43,7 @@ const getSingleUserGenre = (id) => new Promise((resolve, reject) => {
     .catch((error) => reject(error));
 });
 
-// UPDATE THIS API CALL TO BE CORRECT- currently pulling somerhing that cannot work with the router
+// UPDATE THIS API CALL TO BE CORRECT
 const getAllGenresByUserId = (userId) => new Promise((resolve, reject) => {
   fetch(`${dbUrl}/user_genres/${userId}`)
     .then((response) => response.json())

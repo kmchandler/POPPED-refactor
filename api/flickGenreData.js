@@ -43,7 +43,7 @@ const getSingleFlickGenre = (id) => new Promise((resolve, reject) => {
     .catch((error) => reject(error));
 });
 
-// UPDATE THIS API CALL TO BE CORRECT- currently pulling somerhing that cannot work with the router
+// UPDATE THIS API CALL TO BE CORRECT
 const getAllGenresByFlickId = (flickId) => new Promise((resolve, reject) => {
   fetch(`${dbUrl}/flick_genres/${flickId}`)
     .then((response) => response.json())
