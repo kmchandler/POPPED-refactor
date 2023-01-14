@@ -16,7 +16,7 @@ const AuthProvider = (props) => {
   const [user, setUser] = useState(null);
   const [oAuthUser, setOAuthUser] = useState(null);
 
-  const updateUser = useMemo(
+  const onUpdate = useMemo(
     () => (uid) => checkUser(uid).then((userInfo) => {
       setUser({ fbUser: oAuthUser, ...userInfo });
     }),
@@ -47,12 +47,12 @@ const AuthProvider = (props) => {
     // https://reactjs.org/docs/hooks-reference.html#usememo
     () => ({
       user,
-      updateUser,
+      onUpdate,
       userLoading: user === null || oAuthUser === null,
       // as long as user === null, will be true
       // As soon as the user value !== null, value will be false
     }),
-    [user, oAuthUser, updateUser],
+    [user, oAuthUser, onUpdate],
   );
 
   return <AuthContext.Provider value={value} {...props} />;
