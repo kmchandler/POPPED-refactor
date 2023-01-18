@@ -14,7 +14,7 @@ const getFlickGenres = () => new Promise((resolve, reject) => {
     .catch((error) => reject(error));
 });
 
-const createFlickGenres = (flickGenres) => new Promise((resolve, reject) => {
+const createFlickGenre = (flickGenres) => new Promise((resolve, reject) => {
   const flickGenresObj = {
     flick_id: flickGenres.flickId,
     genre_id: flickGenres.genreId,
@@ -30,7 +30,7 @@ const createFlickGenres = (flickGenres) => new Promise((resolve, reject) => {
     .catch((error) => reject(error));
 });
 
-const getSingleFlickGenres = (id) => new Promise((resolve, reject) => {
+const getSingleFlickGenre = (id) => new Promise((resolve, reject) => {
   fetch(`${dbUrl}/flick_genres/${id}`)
     .then((response) => response.json())
     .then((data) => {
@@ -43,7 +43,21 @@ const getSingleFlickGenres = (id) => new Promise((resolve, reject) => {
     .catch((error) => reject(error));
 });
 
-const deleteSingleFlickGenres = (id) => new Promise((resolve, reject) => {
+// UPDATE THIS API CALL TO BE CORRECT
+const getAllGenresByFlickId = (flickId) => new Promise((resolve, reject) => {
+  fetch(`${dbUrl}/flick_genres/${flickId}`)
+    .then((response) => response.json())
+    .then((data) => {
+      resolve({
+        id: data.id,
+        flick_id: data.flickId,
+        genre_id: data.genreId,
+      });
+    })
+    .catch((error) => reject(error));
+});
+
+const deleteSingleFlickGenre = (id) => new Promise((resolve, reject) => {
   fetch(`${dbUrl}/flick_genres/${id}`, {
     method: 'DELETE',
     headers: { 'Content-Type': 'application/json' },
@@ -53,8 +67,9 @@ const deleteSingleFlickGenres = (id) => new Promise((resolve, reject) => {
 });
 
 export {
-  createFlickGenres,
-  getSingleFlickGenres,
-  deleteSingleFlickGenres,
+  createFlickGenre,
+  getSingleFlickGenre,
+  deleteSingleFlickGenre,
   getFlickGenres,
+  getAllGenresByFlickId,
 };

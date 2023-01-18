@@ -5,9 +5,10 @@ import Loading from '../components/Loading';
 import Signin from '../components/Signin';
 import NavBar from '../components/NavBar';
 import { getUserByUid } from '../api/userData';
+import CreateUserForm from '../components/CreateUserForm';
 
 const ViewDirectorBasedOnUserAuthStatus = ({ component: Component, pageProps }) => {
-  const { user, userLoading } = useAuth();
+  const { user, userLoading, updateUser } = useAuth();
   const [profile, setProfile] = useState();
 
   useEffect(() => {
@@ -26,7 +27,7 @@ const ViewDirectorBasedOnUserAuthStatus = ({ component: Component, pageProps }) 
     return (
       <>
         <NavBar navObj={profile} />
-        <Component {...pageProps} />
+        <div className="container">{'valid' in user ? <CreateUserForm user={user} updateUser={updateUser} /> : <Component {...pageProps} />}</div>
       </>
     );
   }

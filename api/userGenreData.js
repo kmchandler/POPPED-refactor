@@ -43,6 +43,20 @@ const getSingleUserGenre = (id) => new Promise((resolve, reject) => {
     .catch((error) => reject(error));
 });
 
+// UPDATE THIS API CALL TO BE CORRECT
+const getAllGenresByUserId = (userId) => new Promise((resolve, reject) => {
+  fetch(`${dbUrl}/user_genres/${userId}`)
+    .then((response) => response.json())
+    .then((data) => {
+      resolve({
+        id: data.id,
+        user_id: data.userId,
+        genre_id: data.genreId,
+      });
+    })
+    .catch((error) => reject(error));
+});
+
 const deleteSingleUserGenre = (id) => new Promise((resolve, reject) => {
   fetch(`${dbUrl}/user_genres/${id}`, {
     method: 'DELETE',
@@ -57,4 +71,5 @@ export {
   getSingleUserGenre,
   deleteSingleUserGenre,
   getUserGenres,
+  getAllGenresByUserId,
 };

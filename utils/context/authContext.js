@@ -5,51 +5,54 @@ import React, {
   useMemo,
   useState,
 } from 'react';
-import { createUser, getUserByUid } from '../../api/userData';
+import { checkUser } from '../auth';
 import { firebase } from '../client';
 
 const AuthContext = createContext();
 
 AuthContext.displayName = 'AuthContext';
 
-const initialState = {
-  firstName: '',
-  lastName: '',
-  username: '',
-  imageUrl: '',
-  uid: '',
-};
-
 const AuthProvider = (props) => {
   const [user, setUser] = useState(null);
+  const [oAuthUser, setOAuthUser] = useState(null);
+
+  const onUpdate = useMemo(
+    () => (uid) => checkUser(uid).then((userInfo) => {
+      setUser({ fbUser: oAuthUser, ...userInfo });
+    }),
+    [oAuthUser],
+  );
 
   useEffect(() => {
     firebase.auth().onAuthStateChanged((fbUser) => {
       if (fbUser) {
-        // if fbuser.uid exists in database continue, if it doesn't, you need to create the user then continue.
-        getUserByUid(fbUser.uid).then((appUser) => {
-          if (appUser) {
-            setUser(fbUser);
+        setOAuthUser(fbUser);
+        checkUser(fbUser.uid).then((userInfo) => {
+          let userObj = {};
+          if ('null' in userInfo) {
+            userObj = userInfo;
           } else {
-            initialState.uid = fbUser.uid;
-            createUser(initialState).then(() => {
-              setUser(fbUser);
-            });
+            userObj = { fbUser, uid: fbUser.uid, ...userInfo };
           }
+          setUser(userObj);
         });
-        // you need to make sure there is a user in your database tied to the firebase user for the app to work.
       } else {
+        setOAuthUser(false);
         setUser(false);
       }
-    });
+    }); // creates a single global listener for auth state changed
   }, []);
 
   const value = useMemo(
+    // https://reactjs.org/docs/hooks-reference.html#usememo
     () => ({
       user,
-      userLoading: user === null,
+      onUpdate,
+      userLoading: user === null || oAuthUser === null,
+      // as long as user === null, will be true
+      // As soon as the user value !== null, value will be false
     }),
-    [user],
+    [user, oAuthUser, onUpdate],
   );
 
   return <AuthContext.Provider value={value} {...props} />;

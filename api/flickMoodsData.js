@@ -43,6 +43,20 @@ const getSingleFlickMoods = (id) => new Promise((resolve, reject) => {
     .catch((error) => reject(error));
 });
 
+// UPDATE THIS API CALL TO BE CORRECT
+const getAllMoodsByFlickId = (flickId) => new Promise((resolve, reject) => {
+  fetch(`${dbUrl}/flick_moods/${flickId}`)
+    .then((response) => response.json())
+    .then((data) => {
+      resolve({
+        id: data.id,
+        flick_id: data.flickId,
+        mood_id: data.moodId,
+      });
+    })
+    .catch((error) => reject(error));
+});
+
 const deleteSingleFlickMoods = (id) => new Promise((resolve, reject) => {
   fetch(`${dbUrl}/flick_moods/${id}`, {
     method: 'DELETE',
@@ -57,4 +71,5 @@ export {
   getSingleFlickMoods,
   deleteSingleFlickMoods,
   getFlickMoods,
+  getAllMoodsByFlickId,
 };
