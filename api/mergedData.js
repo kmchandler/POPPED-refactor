@@ -68,5 +68,5 @@ const getSingleFlickWithMetaData = async (flickId) => {
 };
 
 export {
-  getFlicksByUidWithMetaData, getSingleFlickWithMetaData, getUserByUidWithMetaData, getSingleUserWithMetaData,
+  getFlicksByUidWithMetaData, getSingleFlickWithMetaData, getUserByUidWithMetaData, getSingleUserWithMetaData, getGenresForUser, getGenresForFlick, getMoodsForFlick,
 };
