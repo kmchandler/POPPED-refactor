@@ -3,7 +3,7 @@ import { clientCredentials } from '../utils/client';
 const dbUrl = clientCredentials.databaseURL;
 
 const getFlicksByUid = (uid) => new Promise((resolve, reject) => {
-  fetch(`${dbUrl}/flicks/${uid}"`)
+  fetch(`${dbUrl}/flicks?uid=${uid}"`)
     .then((response) => {
       if (response.data) {
         resolve(Object.values(response.data));

@@ -43,9 +43,8 @@ const getSingleFlickGenre = (id) => new Promise((resolve, reject) => {
     .catch((error) => reject(error));
 });
 
-// UPDATE THIS API CALL TO BE CORRECT
 const getAllGenresByFlickId = (flickId) => new Promise((resolve, reject) => {
-  fetch(`${dbUrl}/flick_genres/${flickId}`)
+  fetch(`${dbUrl}/flick_genres?flickId=${flickId}`)
     .then((response) => response.json())
     .then((data) => {
       resolve({
