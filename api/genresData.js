@@ -30,7 +30,7 @@ const getSingleGenre = (id) => new Promise((resolve, reject) => {
     .then((data) => {
       resolve({
         genre_id: data.id,
-        genre_name: data.genreName,
+        genre_name: data.genre_name,
       });
     })
     .catch((error) => reject(error));

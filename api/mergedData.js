@@ -8,7 +8,7 @@ import { getSingleMood } from './moodsData';
 
 const getGenresForUser = async (id) => {
   const userGenres = await getAllGenresByUserId(id);
-  const promises = userGenres.map((userGenre) => getSingleGenre(userGenre.genreId));
+  const promises = userGenres.map((userGenre) => getSingleGenre(userGenre.genre_id));
   return Promise.all(promises);
 };
 

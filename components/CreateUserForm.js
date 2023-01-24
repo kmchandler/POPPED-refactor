@@ -3,10 +3,9 @@ import Form from 'react-bootstrap/Form';
 import PropTypes from 'prop-types';
 import { useRouter } from 'next/router';
 import { useAuth } from '../utils/context/authContext';
-import { getUserByUid, updateUser } from '../api/userData';
-import { createUserAndGenres } from '../api/profileData';
+import { createUser, getUserByUid, updateUser } from '../api/userData';
 import { getGenres } from '../api/genresData';
-import { updateUserGenres } from '../api/userGenreData';
+import { createUserGenre, updateUserGenres } from '../api/userGenreData';
 
 const initialState = {
   firstName: '',
@@ -50,9 +49,15 @@ function CreateUserForm({ obj }) {
         Promise.all([genrePromise]).then(() => router.push(`/users/${obj.id}`));
       });
     } else {
-      const payload = { ...formInput, uid: user.uid, checkedGenre };
-      const response = await createUserAndGenres(payload);
-      Promise.all([response]).then(() => router.push(`/users/${obj.id}`));
+      try {
+        const payload = { ...formInput, uid: user.uid };
+
+        const createdUser = await createUser(payload);
+        const createdGenres = checkedGenre.map(async (genre) => createUserGenre({ userId: createdUser.id, genreId: genre.id }));
+        Promise.all(createdGenres).then(() => router.push(`/users/${createdUser.id}`));
+      } catch (exception) {
+        console.warn(exception);
+      }
     }
   };
 

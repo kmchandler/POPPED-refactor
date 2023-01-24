@@ -1,20 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import Router from 'next/router';
 import { useAuth } from './context/authContext';
 import Loading from '../components/Loading';
-import Signin from '../components/Signin';
 import NavBar from '../components/NavBar';
 import { getUserByUid } from '../api/userData';
-import CreateUserForm from '../components/CreateUserForm';
 
 const ViewDirectorBasedOnUserAuthStatus = ({ component: Component, pageProps }) => {
-  const { user, userLoading, updateUser } = useAuth();
+  const { user, userLoading } = useAuth();
   const [profile, setProfile] = useState();
 
   useEffect(() => {
     if (user) {
       getUserByUid(user.uid).then((result) => {
-        setProfile(result);
+        if (!result.id) {
+          Router.push('/users/new');
+        } else if (result) {
+          setProfile(result);
+        }
       });
     }
   }, [user]);
@@ -27,12 +30,12 @@ const ViewDirectorBasedOnUserAuthStatus = ({ component: Component, pageProps }) 
     return (
       <>
         <NavBar navObj={profile} />
-        <div className="container">{'valid' in user ? <CreateUserForm user={user} updateUser={updateUser} /> : <Component {...pageProps} />}</div>
+        <div className="container"><Component {...pageProps} /></div>
       </>
     );
   }
 
-  return <Signin />;
+  return <Component {...pageProps} />;
 };
 
 export default ViewDirectorBasedOnUserAuthStatus;
