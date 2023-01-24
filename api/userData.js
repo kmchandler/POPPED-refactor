@@ -62,13 +62,13 @@ const deleteSingleUser = (id) => new Promise((resolve, reject) => {
 const updateUser = (user) => new Promise((resolve, reject) => {
   const userObj = {
     id: user.id,
-    first_name: user.firstName,
-    last_name: user.lastName,
+    first_name: user.first_name,
+    last_name: user.last_name,
     username: user.username,
-    image_url: user.imageUrl,
+    image_url: user.image_url,
     uid: user.uid,
   };
-  fetch(`${dbUrl}/users/${user.id}.json`, {
+  fetch(`${dbUrl}/users/${user.id}`, {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(userObj),

@@ -77,13 +77,13 @@ function CreateUserForm({ obj }) {
     <div className="profilePage profilePageForm">
       <form onSubmit={handleSubmit}>
         <h2 className="updateProfileHeader">profile</h2>
-        <input required type="text" name="firstName" value={formInput.firstName} className="form-control" placeholder="first name" onChange={handleChange} />
+        <input required type="text" name="first_name" value={formInput.first_name} className="form-control" placeholder="first name" onChange={handleChange} />
         <br />
-        <input required type="text" name="lastName" value={formInput.lastName} className="form-control" placeholder="last name" onChange={handleChange} />
+        <input required type="text" name="last_name" value={formInput.last_name} className="form-control" placeholder="last name" onChange={handleChange} />
         <br />
         <input required type="text" name="username" value={formInput.username} className="form-control" placeholder="username" onChange={handleChange} />
         <br />
-        <input type="url" name="imageUrl" value={formInput.imageUrl} className="form-control" placeholder="image url" onChange={handleChange} />
+        <input type="url" name="image_url" value={formInput.image_url} className="form-control" placeholder="image url" onChange={handleChange} />
         <h5 className="favGenresHeader">favorite genres</h5>
         <div className="favGenresList">
           {genres.map((genre) => (
