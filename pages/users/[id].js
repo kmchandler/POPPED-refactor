@@ -27,8 +27,8 @@ export default function Profile() {
   };
 
   const getAllTheFlicks = async () => {
-    // const flicksWithMetaData = await getFlicksByUidWithMetaData(user.uid);
-    // setFlicks(flicksWithMetaData);
+    const flicksWithMetaData = await getFlicksByUidWithMetaData(user.uid);
+    setFlicks(flicksWithMetaData);
   };
 
   useEffect(() => {
