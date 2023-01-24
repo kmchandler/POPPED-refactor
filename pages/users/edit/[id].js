@@ -6,7 +6,7 @@ import CreateUserForm from '../../../components/CreateUserForm';
 
   <Head>
     <title>POPPED:edit profile</title>
-    <meta name="description" content="Meta description for the team page" />
+    <meta name="edit_user" content="edit user" />
   </Head>;
 
 export default function EditUser() {
@@ -17,6 +17,5 @@ export default function EditUser() {
   useEffect(() => {
     getSingleUserWithMetaData(id).then(setEditItem);
   }, [id]);
-
   return (<CreateUserForm obj={editItem} />);
 }

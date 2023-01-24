@@ -8,7 +8,7 @@ import { getSingleMood } from './moodsData';
 
 const getGenresForUser = async (id) => {
   const userGenres = await getAllGenresByUserId(id);
-  const promises = userGenres.map((userGenre) => getSingleGenre(userGenre.genreId));
+  const promises = userGenres.map((userGenre) => getSingleGenre(userGenre.genre_id));
   return Promise.all(promises);
 };
 
@@ -68,5 +68,5 @@ const getSingleFlickWithMetaData = async (flickId) => {
 };
 
 export {
-  getFlicksByUidWithMetaData, getSingleFlickWithMetaData, getUserByUidWithMetaData, getSingleUserWithMetaData,
+  getFlicksByUidWithMetaData, getSingleFlickWithMetaData, getUserByUidWithMetaData, getSingleUserWithMetaData, getGenresForUser, getGenresForFlick, getMoodsForFlick,
 };

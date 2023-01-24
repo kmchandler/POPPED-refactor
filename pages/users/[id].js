@@ -11,7 +11,7 @@ import { getFlicksByUidWithMetaData, getSingleUserWithMetaData } from '../../api
 
   <Head>
     <title>POPPED:profile</title>
-    <meta name="description" content="Meta description for the team page" />
+    <meta name="profile" content="profile page" />
   </Head>;
 
 export default function Profile() {
@@ -35,7 +35,6 @@ export default function Profile() {
     getTheUser();
     getAllTheFlicks();
   }, []);
-
   if (!profile) {
     return null;
   }
@@ -43,8 +42,8 @@ export default function Profile() {
   return (
     <div className="userProfileDiv">
       <div className="profileBtn">
-        <Link passHref href={`/users/edit/${profile.userFirebaseKey}`}>
-          <button className="profileButton" type="submit">{profile.userFirebaseKey ? 'update' : 'create'} profile</button>
+        <Link passHref href={`/users/edit/${profile.id}`}>
+          <button className="profileButton" type="submit">{profile.id ? 'update' : 'create'} profile</button>
         </Link>
       </div>
       <ProfileCard userObj={profile} flicksList={flicks} />

@@ -4,8 +4,8 @@ import PropTypes from 'prop-types';
 import { useRouter } from 'next/router';
 import { useAuth } from '../utils/context/authContext';
 import { createUser, getUserByUid, updateUser } from '../api/userData';
-import { getGenres, getSingleGenreByName } from '../api/genresData';
-import { createUserGenre, updateUserGenres } from '../api/mergedData';
+import { getGenres } from '../api/genresData';
+import { createUserGenre, updateUserGenres } from '../api/userGenreData';
 
 const initialState = {
   firstName: '',
@@ -24,7 +24,7 @@ function CreateUserForm({ obj }) {
 
   useEffect(() => {
     getUserByUid(user.uid).then(setProfile);
-    if (obj.userFirebaseKey) {
+    if (obj.id) {
       setFormInput(obj);
       setCheckedGenre(obj.genres || []);
     }
@@ -39,32 +39,31 @@ function CreateUserForm({ obj }) {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (obj.userFirebaseKey) {
+    if (obj.id) {
       updateUser(formInput).then((userObject) => {
         const genrePromise = updateUserGenres(userObject, checkedGenre);
+        // need to update the updateUser function to work with the new backend
 
-        Promise.all([genrePromise]).then(() => router.push(`/users/${obj.userFirebaseKey}`));
+        Promise.all([genrePromise]).then(() => router.push(`/users/${obj.id}`));
       });
     } else {
-      const payload = { ...formInput, uid: user.uid };
-      createUser(payload).then((userObj) => {
-        const genrePromises = checkedGenre.map((genre) => (
-          getSingleGenreByName(genre.genreName).then((genreObj) => {
-            const userGenreObj = { userFirebaseKey: userObj.userFirebaseKey, genreFirebaseKey: genreObj.genreFirebaseKey };
-            return createUserGenre(userGenreObj);
-          })
-        ));
-        Promise.all([...genrePromises])
-          .then(() => router.push(`/users/${obj.userFirebaseKey}`));
-      });
+      try {
+        const payload = { ...formInput, uid: user.uid };
+
+        const createdUser = await createUser(payload);
+        const createdGenres = checkedGenre.map(async (genre) => createUserGenre({ userId: createdUser.id, genreId: genre.id }));
+        Promise.all(createdGenres).then(() => router.push(`/users/${createdUser.id}`));
+      } catch (exception) {
+        console.warn(exception);
+      }
     }
   };
 
   const handleClickGenre = (evt) => {
     let updatedGenre = [...checkedGenre];
-    const newGenreObj = genres.find((genre) => genre.genreName === evt.target.name);
+    const newGenreObj = genres.find((genre) => genre.genre_name === evt.target.name);
 
     if (evt.target.checked) {
       updatedGenre = [...checkedGenre, newGenreObj];
@@ -77,7 +76,7 @@ function CreateUserForm({ obj }) {
   return (
     <div className="profilePage profilePageForm">
       <form onSubmit={handleSubmit}>
-        <h2 className="updateProfileHeader">update profile</h2>
+        <h2 className="updateProfileHeader">profile</h2>
         <input required type="text" name="firstName" value={formInput.firstName} className="form-control" placeholder="first name" onChange={handleChange} />
         <br />
         <input required type="text" name="lastName" value={formInput.lastName} className="form-control" placeholder="last name" onChange={handleChange} />
@@ -88,14 +87,14 @@ function CreateUserForm({ obj }) {
         <h5 className="favGenresHeader">favorite genres</h5>
         <div className="favGenresList">
           {genres.map((genre) => (
-            <div key={genre.genreFirebaseKey} className="mb-3">
+            <div key={genre.id} className="mb-3">
               <Form.Check
                 type="checkbox"
-                id={genre.genreFirebaseKey}
-                label={genre.genreName}
-                defaultChecked={checkedGenre.find((cg) => cg?.genreName === genre.genreName)}
+                id={genre.id}
+                label={genre.genre_name}
+                defaultChecked={checkedGenre.find((cg) => cg?.genre_name === genre.genre_name)}
                 onChange={handleClickGenre}
-                name={genre.genreName}
+                name={genre.genre_name}
               />
             </div>
           ))}
@@ -112,11 +111,12 @@ function CreateUserForm({ obj }) {
 
 CreateUserForm.propTypes = {
   obj: PropTypes.shape({
+    id: PropTypes.string,
     firstName: PropTypes.string,
     lastName: PropTypes.string,
     username: PropTypes.string,
     imageUrl: PropTypes.string,
-    userFirebaseKey: PropTypes.string,
+    userId: PropTypes.number,
     genres: PropTypes.arrayOf(PropTypes.string),
   }),
 };

@@ -3,18 +3,16 @@ import { clientCredentials } from '../utils/client';
 const dbUrl = clientCredentials.databaseURL;
 
 const getUserByUid = (uid) => new Promise((resolve, reject) => {
-  fetch('http://localhost:8000/checkuser', {
-    method: 'POST',
-    body: JSON.stringify({
-      uid,
-    }),
-    headers: {
-      'Content-Type': 'application/json',
-      Accept: 'application/json',
-    },
-  })
-    .then((resp) => resolve(resp.json()))
-    .catch(reject);
+  fetch(`${dbUrl}/users?uid=${uid}`)
+    .then((response) => response.json())
+    .then((response) => {
+      if (response.length) {
+        resolve(response[0]);
+      } else {
+        resolve([]);
+      }
+    })
+    .catch((error) => reject(error));
 });
 
 const createUser = (user) => new Promise((resolve, reject) => {
@@ -37,17 +35,15 @@ const createUser = (user) => new Promise((resolve, reject) => {
 });
 
 const getUserByUserId = (id) => new Promise((resolve, reject) => {
-  fetch(`${dbUrl}/flicks/${id}`)
+  fetch(`${dbUrl}/users/${id}`)
     .then((response) => response.json())
     .then((data) => {
       resolve({
         id: data.id,
-        title: data.title,
-        type: data.type,
-        watched: data.watched,
-        favorite: data.favorite,
-        image_url: data.imageUrl,
-        rating: data.rating,
+        first_name: data.first_name,
+        last_name: data.last_name,
+        username: data.username,
+        image_url: data.image_url,
         uid: data.uid,
       });
     })

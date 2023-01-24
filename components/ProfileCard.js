@@ -7,8 +7,8 @@ import FavoritedFlicksCard from './FavoritedFlicksCard';
 
 export default function ProfileCard({ userObj, flicksList }) {
   let profileImage = '';
-  if (userObj.imageUrl !== '') {
-    profileImage = userObj.imageUrl;
+  if (userObj.image_url !== '') {
+    profileImage = userObj.image_url;
   } else {
     profileImage = 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png';
   }
@@ -17,12 +17,11 @@ export default function ProfileCard({ userObj, flicksList }) {
   flicksList.forEach((flick) => {
     if (flick.favorite) favoritedFlicks.push(flick);
   });
-
   return (
     <div className="profileCardDiv">
       <img src={profileImage} alt={userObj.username} className="rounded-circle profilePagePic" />
       <br />
-      <h1>{userObj.firstName} {userObj.lastName}</h1>
+      <h1>{userObj.first_name} {userObj.last_name}</h1>
       <h2>{userObj.username}</h2>
       <br />
       <Link href="/flicks/watchlist" passHref>
@@ -30,7 +29,7 @@ export default function ProfileCard({ userObj, flicksList }) {
       </Link>
       <br />
       {userObj.genres?.length > 0 ? <h3>favorite genres:</h3> : null}
-      {userObj.genres?.map((genre) => <h6 className="favGenres">- {genre.genreName}</h6>)}
+      {userObj.genres?.map((genre) => <h6 className="favGenres">- {genre.genre_name}</h6>)}
       <br />
       {favoritedFlicks.length > 0 ? <h3>favorited flicks:</h3> : null}
       <div className="d-flex flex-wrap cardContainer favoritedFlicksDiv">
@@ -42,12 +41,12 @@ export default function ProfileCard({ userObj, flicksList }) {
 
 ProfileCard.propTypes = {
   userObj: PropTypes.shape({
-    firstName: PropTypes.string,
-    lastName: PropTypes.string,
+    first_name: PropTypes.string,
+    last_name: PropTypes.string,
     username: PropTypes.string,
     genres: PropTypes.arrayOf(PropTypes.string),
-    imageUrl: PropTypes.string,
-    userFirebaseKey: PropTypes.string,
+    image_url: PropTypes.string,
+    uid: PropTypes.string,
   }),
   flicksList: PropTypes.arrayOf(PropTypes.shape({
     favorite: PropTypes.bool,

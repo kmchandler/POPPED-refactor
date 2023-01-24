@@ -30,6 +30,21 @@ const createUserGenre = (userGenres) => new Promise((resolve, reject) => {
     .catch((error) => reject(error));
 });
 
+const updateUserGenres = (userGenres) => new Promise((resolve, reject) => {
+  const userGenreObj = {
+    id: userGenres.id,
+    user_id: userGenres.userId,
+    genre_id: userGenres.genreId,
+  };
+  fetch(`${dbUrl}/user_genres/${userGenres.id}`, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(userGenreObj),
+  })
+    .then((response) => resolve(response))
+    .catch((error) => reject(error));
+});
+
 const getSingleUserGenre = (id) => new Promise((resolve, reject) => {
   fetch(`${dbUrl}/user_genres/${id}`)
     .then((response) => response.json())
@@ -45,14 +60,10 @@ const getSingleUserGenre = (id) => new Promise((resolve, reject) => {
 
 // UPDATE THIS API CALL TO BE CORRECT
 const getAllGenresByUserId = (userId) => new Promise((resolve, reject) => {
-  fetch(`${dbUrl}/user_genres/${userId}`)
+  fetch(`${dbUrl}/user_genres?userId=${userId}`)
     .then((response) => response.json())
     .then((data) => {
-      resolve({
-        id: data.id,
-        user_id: data.userId,
-        genre_id: data.genreId,
-      });
+      resolve(data);
     })
     .catch((error) => reject(error));
 });
@@ -72,4 +83,5 @@ export {
   deleteSingleUserGenre,
   getUserGenres,
   getAllGenresByUserId,
+  updateUserGenres,
 };
