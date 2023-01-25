@@ -25,8 +25,8 @@ function FlickCard({
           <hr />
           <div className="cardDetails">
             <p className="flickCardType">type: {flickObj.type.toLowerCase()}</p>
-            <p className="flickCardGenre">{flickObj.genres?.length > 0 ? 'genres: ' : ''}{flickObj.genres ? flickObj.genres.map((genre, index) => (index ? ', ' : '') + genre?.genreName) : ''}</p>
-            <p className="flickCardMood">{flickObj.moods?.length > 0 ? 'moods: ' : ''}{flickObj.moods ? flickObj.moods.map((mood, index) => (index ? ', ' : '') + mood?.moodsName) : ''}</p>
+            <p className="flickCardGenre">{flickObj.genres?.length > 0 ? 'genres: ' : ''}{flickObj.genres ? flickObj.genres.map((genre, index) => (index ? ', ' : '') + genre?.genre_name) : ''}</p>
+            <p className="flickCardMood">{flickObj.moods?.length > 0 ? 'moods: ' : ''}{flickObj.moods ? flickObj.moods.map((mood, index) => (index ? ', ' : '') + mood?.mood_name) : ''}</p>
             <p className="flickCardCastCrew">{flickObj.cast_crew ? 'cast/crew: ' : ''}{flickObj.cast_crew ? flickObj.cast_crew.toLowerCase() : null}</p>
             <p className="flickCardRecommendedBy">{flickObj.recommended_by ? 'recommended by: ' : ''}{flickObj.recommended_by ? flickObj.recommended_by.toLowerCase() : ''}</p>
             <div>{flickObj.watched ? <StarRating flickObj={flickObj} /> : null }</div>
