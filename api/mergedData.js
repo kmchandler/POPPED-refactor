@@ -2,8 +2,8 @@ import { getFlicksByUid, getSingleFlick } from './flicksData';
 import { getUserByUid, getUserByUserId } from './userData';
 import { getAllGenresByUserId } from './userGenreData';
 import { getSingleGenre } from './genresData';
-import { getAllGenresByFlickId } from './flickGenreData';
-import { getAllMoodsByFlickId } from './flickMoodsData';
+import { getAllFlickGenresByFlickId } from './flickGenreData';
+import { getAllFlickMoodsByFlickId } from './flickMoodsData';
 import { getSingleMood } from './moodsData';
 
 const getGenresForUser = async (id) => {
@@ -30,23 +30,23 @@ const getUserByUidWithMetaData = async (uid) => {
   };
 };
 
-const getGenresForFlick = async (id) => {
-  const flickGenres = await getAllGenresByFlickId(id);
-  const promises = flickGenres.map((flickGenre) => getSingleGenre(flickGenre.genreId));
+const getGenresForFlick = async (flickId) => {
+  const flickGenres = await getAllFlickGenresByFlickId(flickId);
+  const promises = flickGenres.map((flickGenre) => getSingleGenre(flickGenre.genre_id));
   return Promise.all(promises);
 };
 
 const getMoodsForFlick = async (id) => {
-  const flickMoods = await getAllMoodsByFlickId(id);
-  const promises = flickMoods.map((flickMood) => getSingleMood(flickMood.moodId));
+  const flickMoods = await getAllFlickMoodsByFlickId(id);
+  const promises = flickMoods.map((flickMood) => getSingleMood(flickMood.mood_id));
   return Promise.all(promises);
 };
 
 const getFlicksByUidWithMetaData = async (uid) => {
   const flicks = await getFlicksByUid(uid);
   const promises = flicks.map(async (flick) => {
-    const genres = await getGenresForFlick(flick.flicksFirebaseKey);
-    const moods = await getMoodsForFlick(flick.flicksFirebaseKey);
+    const genres = await getGenresForFlick(flick.id);
+    const moods = await getMoodsForFlick(flick.id);
     return {
       ...flick,
       genres,

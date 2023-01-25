@@ -11,7 +11,7 @@ const getGenres = () => new Promise((resolve, reject) => {
 
 const createGenre = (genre) => new Promise((resolve, reject) => {
   const genreObj = {
-    genre_name: genre.genreName,
+    genre_name: genre.genre_name,
   };
   fetch(`${dbUrl}/genres`, {
     method: 'POST',
@@ -28,25 +28,10 @@ const getSingleGenre = (id) => new Promise((resolve, reject) => {
   fetch(`${dbUrl}/genres/${id}`)
     .then((response) => response.json())
     .then((data) => {
-      resolve({
-        genre_id: data.id,
-        genre_name: data.genre_name,
-      });
+      resolve(data);
     })
     .catch((error) => reject(error));
 });
-
-// const getSingleGenreByName = (genreName) => new Promise((resolve, reject) => {
-//   fetch(`${dbUrl}/genres.json?orderBy="genreName"&equalTo="${genreName}"`)
-//     .then((response) => response.json())
-//     .then((data) => {
-//       resolve({
-//         genre_id: data.id,
-//         genre_name: data.genreName,
-//       });
-//     })
-//     .catch((error) => reject(error));
-// });
 
 const deleteSingleGenre = (id) => new Promise((resolve, reject) => {
   fetch(`${dbUrl}/genres/${id}`, {
@@ -62,5 +47,4 @@ export {
   getSingleGenre,
   deleteSingleGenre,
   getGenres,
-  // getSingleGenreByName,
 };

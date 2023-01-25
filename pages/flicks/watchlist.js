@@ -21,7 +21,7 @@ export default function Watchlist() {
     setFlicks(flicksWithMetaData);
     setFilteredFlicks(flicksWithMetaData);
   };
-
+  console.warn(flicks);
   useEffect(() => {
     getGenres().then(setGenres);
     getAllTheFlicks();
@@ -67,11 +67,11 @@ export default function Watchlist() {
             {
             genres.map((genre) => (
               <option
-                key={genre.genreFirebaseKey}
-                value={genre.genreName}
-                id={genre.genreName}
+                key={genre.genre_id}
+                value={genre.genre_name}
+                id={genre.genre_name}
               >
-                {genre.genreName}
+                {genre.genre_name}
               </option>
             ))
           }
@@ -81,7 +81,7 @@ export default function Watchlist() {
           <button type="button" className="flickButton">add a flick</button>
         </Link>
         <div className="d-flex flex-wrap cardContainer watchlistCardDiv">
-          {filteredFlicks.map((flix) => <FlickCard key={flix.flicksFirebaseKey} flickObj={flix} onUpdate={getAllTheFlicks} />)}
+          {filteredFlicks.map((flix) => <FlickCard key={flix.id} flickObj={flix} onUpdate={getAllTheFlicks} />)}
         </div>
       </div>
     </>

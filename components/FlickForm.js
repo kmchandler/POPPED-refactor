@@ -6,17 +6,16 @@ import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import Form from 'react-bootstrap/Form';
 import { useAuth } from '../utils/context/authContext';
 import { updateFlick, createFlick } from '../api/flicksData';
-import {
-  createFlickGenre, createFlickMood, updateFlickGenres, updateFlickMoods,
-} from '../api/mergedData';
-import { getGenres, getSingleGenreByName } from '../api/genresData';
-import { getMoods, getSingleMoodByName } from '../api/moodsData';
+import { getGenres, getSingleGenre } from '../api/genresData';
+import { getMoods, getSingleMood } from '../api/moodsData';
+import { createFlickGenre, updateFlickGenre } from '../api/flickGenreData';
+import { createFlickMoods, updateFlickMood } from '../api/flickMoodsData';
 
 const initialState = {
   title: '',
   type: '',
-  castCrew: '',
-  recommendedBy: '',
+  cast_crew: '',
+  recommended_by: '',
   watched: false,
   favorite: false,
   imageUrl: '',
@@ -35,7 +34,7 @@ function FlickForm({ obj }) {
   useEffect(() => {
     getGenres().then(setGenres);
     getMoods().then(setMoods);
-    if (obj.flicksFirebaseKey) {
+    if (obj.id) {
       setFormInput(obj);
       setCheckedGenre(obj.genres || []);
       setCheckedMood(obj.moods || []);
@@ -52,10 +51,10 @@ function FlickForm({ obj }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (obj.flicksFirebaseKey) {
+    if (obj.id) {
       updateFlick(formInput).then((flick) => {
-        const genrePromise = updateFlickGenres(flick, checkedGenre);
-        const moodsPromise = updateFlickMoods(flick, checkedMood);
+        const genrePromise = updateFlickGenre(flick, checkedGenre);
+        const moodsPromise = updateFlickMood(flick, checkedMood);
 
         Promise.all([moodsPromise, genrePromise]).then(() => router.push('/flicks/watchlist'));
       });
@@ -63,16 +62,16 @@ function FlickForm({ obj }) {
       const payload = { ...formInput, uid: user.uid };
       createFlick(payload).then((flick) => {
         const genrePromises = checkedGenre.map((genre) => (
-          getSingleGenreByName(genre.genreName).then((genreObj) => {
-            const flickGenreObj = { flickFirebaseKey: flick.flicksFirebaseKey, genreFirebaseKey: genreObj.genreFirebaseKey };
+          getSingleGenre(genre.id).then((genreObj) => {
+            const flickGenreObj = { flick_id: flick.id, genre_id: genreObj.genre_id };
             return createFlickGenre(flickGenreObj);
           })
         ));
 
         const moodPromises = checkedMood.map((mood) => (
-          getSingleMoodByName(mood.moodsName).then((moodObj) => {
-            const flickMoodObj = { flickFirebaseKey: flick.flicksFirebaseKey, moodFirebaseKey: moodObj.moodFirebaseKey };
-            return createFlickMood(flickMoodObj);
+          getSingleMood(mood.id).then((moodObj) => {
+            const flickMoodObj = { flick_id: flick.id, mood_id: moodObj.mood_id };
+            return createFlickMoods(flickMoodObj);
           })
         ));
 
@@ -84,24 +83,24 @@ function FlickForm({ obj }) {
 
   const handleClickGenre = (e) => {
     let updatedGenre = [...checkedGenre];
-    const newGenreObj = genres.find((genre) => genre.genreName === e.target.name);
+    const newGenreObj = genres.find((genre) => genre.genre_name === e.target.name);
 
     if (e.target.checked) {
       updatedGenre = [...checkedGenre, newGenreObj];
     } else {
-      updatedGenre.splice(checkedGenre.findIndex((cg) => cg.genreName === newGenreObj.genreName), 1);
+      updatedGenre.splice(checkedGenre.findIndex((cg) => cg.genre_name === newGenreObj.genre_name), 1);
     }
     setCheckedGenre(updatedGenre);
   };
 
   const handleClickMood = (e) => {
     let updatedMood = [...checkedMood];
-    const newMoodObj = moods.find((mood) => mood.moodsName === e.target.name);
+    const newMoodObj = moods.find((mood) => mood.mood_name === e.target.name);
 
     if (e.target.checked) {
       updatedMood = [...checkedMood, newMoodObj];
     } else {
-      updatedMood.splice(checkedMood.findIndex((cm) => cm.moodsName === newMoodObj.moodsName), 1);
+      updatedMood.splice(checkedMood.findIndex((cm) => cm.mood_name === newMoodObj.mood_name), 1);
     }
     setCheckedMood(updatedMood);
   };
@@ -109,7 +108,7 @@ function FlickForm({ obj }) {
   return (
     <div className="flickFormContainer">
       <Form className="flickForm" onSubmit={handleSubmit}>
-        <h2 className="flickHeaderText mt-5">{obj.flicksFirebaseKey ? 'update' : 'add'} flick</h2>
+        <h2 className="flickHeaderText mt-5">{obj.id ? 'update' : 'add'} flick</h2>
         <Form.Control type="text" placeholder="title" name="title" value={formInput.title} onChange={handleChange} required />
         <br />
         <Form.Select
@@ -129,14 +128,14 @@ function FlickForm({ obj }) {
         <h5>genre</h5>
         <div className="genreDivFlick">
           {genres.map((genre) => (
-            <div key={genre.genreFirebaseKey} className="mb-3">
+            <div key={genre.id} className="mb-3">
               <Form.Check
                 type="checkbox"
-                id={genre.genreFirebaseKey}
-                label={genre.genreName}
-                defaultChecked={checkedGenre.find((cg) => cg?.genreName === genre.genreName)}
+                id={genre.id}
+                label={genre.genre_name}
+                defaultChecked={checkedGenre.find((cg) => cg?.genre_name === genre.genre_name)}
                 onChange={handleClickGenre}
-                name={genre.genreName}
+                name={genre.genre_name}
               />
             </div>
           ))}
@@ -145,25 +144,25 @@ function FlickForm({ obj }) {
         <h5>moods</h5>
         <div className="moodDivFlick">
           {moods.map((mood) => (
-            <div key={mood.moodFirebaseKey} className="mb-3">
+            <div key={mood.id} className="mb-3">
               <Form.Check
                 type="checkbox"
-                id={mood.moodFirebaseKey}
-                label={mood.moodsName}
-                defaultChecked={checkedMood.find((cm) => cm?.moodsName === mood.moodsName)}
+                id={mood.id}
+                label={mood.mood_name}
+                defaultChecked={checkedMood.find((cm) => cm?.mood_name === mood.mood_name)}
                 onChange={handleClickMood}
-                name={mood.moodsName}
+                name={mood.mood_name}
               />
             </div>
           ))}
         </div>
 
         <FloatingLabel controlId="floatingInput5" label="cast and crew" className="mb-3">
-          <Form.Control type="text" placeholder="cast and crew" name="castCrew" value={formInput.castCrew} onChange={handleChange} />
+          <Form.Control type="text" placeholder="cast and crew" name="cast_crew" value={formInput.cast_crew} onChange={handleChange} />
         </FloatingLabel>
 
         <FloatingLabel controlId="floatingInput6" label="recommended by" className="mb-3">
-          <Form.Control type="text" placeholder="recommended by" name="recommendedBy" value={formInput.recommendedBy} onChange={handleChange} />
+          <Form.Control type="text" placeholder="recommended by" name="recommended_by" value={formInput.recommended_by} onChange={handleChange} />
         </FloatingLabel>
 
         <Form.Check
@@ -191,10 +190,10 @@ function FlickForm({ obj }) {
         />
 
         <FloatingLabel controlId="floatingInput9" label="photo url" className="mb-3 photoUrlFlick">
-          <Form.Control type="url" placeholder="photo url" name="imageUrl" value={formInput.imageUrl} onChange={handleChange} required />
+          <Form.Control type="url" placeholder="photo url" name="image_url" value={formInput.image_url} onChange={handleChange} required />
         </FloatingLabel>
 
-        <button className="flickFormButton" type="submit">{obj.flicksFirebaseKey ? 'update' : 'add'} flick</button>
+        <button className="flickFormButton" type="submit">{obj.id ? 'update' : 'add'} flick</button>
       </Form>
     </div>
   );
@@ -202,16 +201,16 @@ function FlickForm({ obj }) {
 
 FlickForm.propTypes = {
   obj: PropTypes.shape({
-    flicksFirebaseKey: PropTypes.string,
+    id: PropTypes.number,
     title: PropTypes.string,
     type: PropTypes.string,
     genres: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string)),
     moods: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string)),
-    castCrew: PropTypes.string,
-    recommendedBy: PropTypes.string,
+    cast_crew: PropTypes.string,
+    recommended_by: PropTypes.string,
     watched: PropTypes.bool,
     favorite: PropTypes.bool,
-    imageUrl: PropTypes.string,
+    image_url: PropTypes.string,
     rating: PropTypes.string,
     uid: PropTypes.string,
   }),

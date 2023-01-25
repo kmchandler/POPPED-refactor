@@ -11,7 +11,7 @@ function FlickCard({
 }) {
   const deleteThisFlick = () => {
     if (window.confirm(`Delete ${flickObj.title}?`)) {
-      deleteSingleFlick(flickObj.flicksFirebaseKey).then(() => onUpdate());
+      deleteSingleFlick(flickObj.id).then(() => onUpdate());
     }
   };
 
@@ -19,7 +19,7 @@ function FlickCard({
   return (
     <>
       <Card className="flickCardDiv" style={{ width: '25rem', margin: '10px', height: '55rem' }}>
-        <Card.Img className="cardImage" variant="top" src={flickObj.imageUrl} alt={flickObj.title} style={{ height: '550px' }} />
+        <Card.Img className="cardImage" variant="top" src={flickObj.image_url} alt={flickObj.title} style={{ height: '550px' }} />
         <Card.Body className="cardBody flickCardBody">
           <Card.Title className="recommendationTitle">{flickObj.title.toLowerCase()} {flickObj.favorite ? '⭐' : null} {flickObj.watched ? glasses : null}</Card.Title>
           <hr />
@@ -27,12 +27,12 @@ function FlickCard({
             <p className="flickCardType">type: {flickObj.type.toLowerCase()}</p>
             <p className="flickCardGenre">{flickObj.genres?.length > 0 ? 'genres: ' : ''}{flickObj.genres ? flickObj.genres.map((genre, index) => (index ? ', ' : '') + genre?.genreName) : ''}</p>
             <p className="flickCardMood">{flickObj.moods?.length > 0 ? 'moods: ' : ''}{flickObj.moods ? flickObj.moods.map((mood, index) => (index ? ', ' : '') + mood?.moodsName) : ''}</p>
-            <p className="flickCardCastCrew">{flickObj.castCrew ? 'cast/crew: ' : ''}{flickObj.castCrew ? flickObj.castCrew.toLowerCase() : null}</p>
-            <p className="flickCardRecommendedBy">{flickObj.recommendedBy ? 'recommended by: ' : ''}{flickObj.recommendedBy ? flickObj.recommendedBy.toLowerCase() : ''}</p>
+            <p className="flickCardCastCrew">{flickObj.cast_crew ? 'cast/crew: ' : ''}{flickObj.cast_crew ? flickObj.cast_crew.toLowerCase() : null}</p>
+            <p className="flickCardRecommendedBy">{flickObj.recommended_by ? 'recommended by: ' : ''}{flickObj.recommended_by ? flickObj.recommended_by.toLowerCase() : ''}</p>
             <div>{flickObj.watched ? <StarRating flickObj={flickObj} /> : null }</div>
           </div>
           <div className="flickCardBtns">
-            <Link href={`/flicks/edit/${flickObj.flicksFirebaseKey}`} passHref>
+            <Link href={`/flicks/edit/${flickObj.id}`} passHref>
               <button type="button" className="editButton">edit</button>
             </Link>
             <button type="button" className="deleteButton m-2" onClick={deleteThisFlick}>
@@ -48,16 +48,16 @@ function FlickCard({
 FlickCard.propTypes = {
   flickObj: PropTypes.shape({
     flick: PropTypes.string,
-    flicksFirebaseKey: PropTypes.string,
+    id: PropTypes.string,
     title: PropTypes.string,
     type: PropTypes.string,
     genres: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string)),
     moods: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string)),
-    castCrew: PropTypes.string,
-    recommendedBy: PropTypes.string,
+    cast_crew: PropTypes.string,
+    recommended_by: PropTypes.string,
     watched: PropTypes.bool,
     favorite: PropTypes.bool,
-    imageUrl: PropTypes.string,
+    image_url: PropTypes.string,
     rating: PropTypes.string,
     uid: PropTypes.string,
   }).isRequired,

@@ -44,8 +44,6 @@ function CreateUserForm({ obj }) {
     if (obj.id) {
       updateUser(formInput).then((userObject) => {
         const genrePromise = updateUserGenres(userObject, checkedGenre);
-        // need to update the updateUser function to work with the new backend
-
         Promise.all([genrePromise]).then(() => router.push(`/users/${obj.id}`));
       });
     } else {
@@ -68,7 +66,7 @@ function CreateUserForm({ obj }) {
     if (evt.target.checked) {
       updatedGenre = [...checkedGenre, newGenreObj];
     } else {
-      updatedGenre.splice(checkedGenre.findIndex((cg) => cg.genreName === newGenreObj.genreName), 1);
+      updatedGenre.splice(checkedGenre.findIndex((cg) => cg.genre_name === newGenreObj.genre_name), 1);
     }
     setCheckedGenre(updatedGenre);
   };
