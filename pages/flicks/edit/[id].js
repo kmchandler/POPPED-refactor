@@ -6,13 +6,13 @@ import FlickForm from '../../../components/FlickForm';
 export default function EditFlick() {
   const [editItem, setEditItem] = useState({});
   const router = useRouter();
-  const { flicksFirebaseKey } = router.query;
+  const { id } = router.query;
 
   useEffect(() => {
-    getSingleFlickWithMetaData(flicksFirebaseKey).then(setEditItem);
-  }, [flicksFirebaseKey]);
+    getSingleFlickWithMetaData(id).then(setEditItem);
+  }, [id]);
 
-  if (!editItem.flicksFirebaseKey) return null;
+  if (!editItem.id) return null;
 
   return (<FlickForm obj={editItem} />);
 }
