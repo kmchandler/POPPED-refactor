@@ -21,12 +21,11 @@ export default function Watchlist() {
     setFlicks(flicksWithMetaData);
     setFilteredFlicks(flicksWithMetaData);
   };
-  console.warn(flicks);
   useEffect(() => {
     getGenres().then(setGenres);
     getAllTheFlicks();
   }, [user]);
-
+  console.warn(flicks);
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormInput((prevState) => ({
@@ -36,7 +35,7 @@ export default function Watchlist() {
     if (value === 'none') {
       setFilteredFlicks(flicks);
     } else {
-      const filteredResults = flicks.filter((flick) => flick.genres.some((genre) => genre.genreName === value));
+      const filteredResults = flicks.filter((flick) => flick.genres.some((genre) => genre.genre_name === value));
       setFilteredFlicks(filteredResults);
     }
   };
@@ -45,7 +44,7 @@ export default function Watchlist() {
     <>
       <Head>
         <title>POPPED:watchlist</title>
-        <meta name="description" content="Meta description for the team page" />
+        <meta name="wathlist" content="watchlist page" />
       </Head>;
       <div className="text-center my-4 flickCardsDiv">
         <h1 className="watchlistHeader">watchlist</h1>
@@ -67,7 +66,7 @@ export default function Watchlist() {
             {
             genres.map((genre) => (
               <option
-                key={genre.genre_id}
+                key={genre.id}
                 value={genre.genre_name}
                 id={genre.genre_name}
               >
