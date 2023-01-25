@@ -17,7 +17,7 @@ export default function Moody() {
     const flicksWithMetaData = await getFlicksByUidWithMetaData(user.uid);
     const flickMoods = [];
     flicksWithMetaData.map((md) => md.moods.filter((mood) => {
-      if (mood.moodsName.includes('moody')) {
+      if (mood.mood_name.includes('moody')) {
         flickMoods.push(md);
       }
     }));
@@ -49,7 +49,7 @@ export default function Moody() {
       </Head>;
       <button type="button" onClick={onClick} className="backToMoodsBtn foundFlicksBtn">previous page</button>
       <div className="d-flex flex-wrap cardContainer moodsCardsDiv">
-        {flicks?.map((flix) => <FlickCard key={flix.flicksFirebaseKey} flickObj={flix} onUpdate={getMoodyFlicks} />)}
+        {flicks?.map((flix) => <FlickCard key={flix.id} flickObj={flix} onUpdate={getMoodyFlicks} />)}
       </div>
     </>
   );

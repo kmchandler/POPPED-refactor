@@ -17,7 +17,7 @@ export default function Mischievous() {
     const flicksWithMetaData = await getFlicksByUidWithMetaData(user.uid);
     const flickMoods = [];
     flicksWithMetaData.map((md) => md.moods.filter((mood) => {
-      if (mood.moodsName.includes('mischievous')) {
+      if (mood.mood_name.includes('mischievous')) {
         flickMoods.push(md);
       }
     }));
@@ -49,7 +49,7 @@ export default function Mischievous() {
       </Head>;
       <button type="button" onClick={onClick} className="backToMoodsBtn foundFlicksBtn">previous page</button>
       <div className="d-flex flex-wrap cardContainer moodsCardsDiv">
-        {flicks?.map((flix) => <FlickCard key={flix.flicksFirebaseKey} flickObj={flix} onUpdate={getMischievousFlicks} />)}
+        {flicks?.map((flix) => <FlickCard key={flix.id} flickObj={flix} onUpdate={getMischievousFlicks} />)}
       </div>
     </>
   );

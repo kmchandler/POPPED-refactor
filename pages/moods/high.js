@@ -17,7 +17,7 @@ export default function High() {
     const flicksWithMetaData = await getFlicksByUidWithMetaData(user.uid);
     const flickMoods = [];
     flicksWithMetaData.map((md) => md.moods.filter((mood) => {
-      if (mood.moodsName.includes('high')) {
+      if (mood.mood_name.includes('high')) {
         flickMoods.push(md);
       }
     }));
@@ -35,7 +35,7 @@ export default function High() {
       <div className="noFlicksDiv">
         <Head>
           <title>POPPED:high</title>
-          <meta name="description" content="Meta description for the team page" />
+          <meta name="description" content="high" />
         </Head>;
         <h3 className="noFlicksFound">No flicks found matching this mood.</h3>
         <button type="button" onClick={onClick} className="backToMoodsBtn noFlicksBtn">previous page</button>
@@ -45,11 +45,11 @@ export default function High() {
     <>
       <Head>
         <title>POPPED:high</title>
-        <meta name="description" content="Meta description for the team page" />
+        <meta name="description" content="high" />
       </Head>;
       <button type="button" onClick={onClick} className="backToMoodsBtn foundFlicksBtn">previous page</button>
       <div className="d-flex flex-wrap cardContainer moodsCardsDiv">
-        {flicks?.map((flix) => <FlickCard key={flix.flicksFirebaseKey} flickObj={flix} onUpdate={getHighFlicks} />)}
+        {flicks?.map((flix) => <FlickCard key={flix.id} flickObj={flix} onUpdate={getHighFlicks} />)}
       </div>
     </>
   );

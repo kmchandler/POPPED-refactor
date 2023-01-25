@@ -17,7 +17,7 @@ export default function Chill() {
     const flicksWithMetaData = await getFlicksByUidWithMetaData(user.uid);
     const flickMoods = [];
     flicksWithMetaData.map((md) => md.moods.filter((mood) => {
-      if (mood.moodsName.includes('chill')) {
+      if (mood.mood_name.includes('chill')) {
         flickMoods.push(md);
       }
     }));
@@ -35,7 +35,7 @@ export default function Chill() {
       <div className="noFlicksDiv">
         <Head>
           <title>POPPED:chill</title>
-          <meta name="description" content="Meta description for the team page" />
+          <meta name="chill" content="chill" />
         </Head>;
 
         <h3 className="noFlicksFound">No flicks found matching this mood.</h3>
@@ -46,11 +46,11 @@ export default function Chill() {
     <>
       <Head>
         <title>POPPED:chill</title>
-        <meta name="description" content="Meta description for the team page" />
+        <meta name="chill" content="chill" />
       </Head>;
       <button type="button" onClick={onClick} className="backToMoodsBtn foundFlicksBtn">previous page</button>
       <div className="d-flex flex-wrap cardContainer moodsCardsDiv">
-        {flicks?.map((flix) => <FlickCard key={flix.flicksFirebaseKey} flickObj={flix} onUpdate={getChillFlicks} />)}
+        {flicks?.map((flix) => <FlickCard key={flix.id} flickObj={flix} onUpdate={getChillFlicks} />)}
       </div>
     </>
   );
