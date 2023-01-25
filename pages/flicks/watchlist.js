@@ -25,7 +25,7 @@ export default function Watchlist() {
     getGenres().then(setGenres);
     getAllTheFlicks();
   }, [user]);
-  console.warn(flicks);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormInput((prevState) => ({
