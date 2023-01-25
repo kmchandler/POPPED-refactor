@@ -4,19 +4,14 @@ const dbUrl = clientCredentials.databaseURL;
 
 const getMoods = () => new Promise((resolve, reject) => {
   fetch(`${dbUrl}/moods`)
-    .then((response) => {
-      if (response.data) {
-        resolve(Object.values(response.data));
-      } else {
-        resolve([]);
-      }
-    })
-    .catch((error) => reject(error));
+    .then((response) => response.json())
+    .then(resolve)
+    .catch(reject);
 });
 
 const createMood = (mood) => new Promise((resolve, reject) => {
   const moodObj = {
-    mood_name: mood.moodName,
+    mood_name: mood.mood_name,
   };
   fetch(`${dbUrl}/moods`, {
     method: 'POST',
@@ -33,25 +28,10 @@ const getSingleMood = (id) => new Promise((resolve, reject) => {
   fetch(`${dbUrl}/moods/${id}`)
     .then((response) => response.json())
     .then((data) => {
-      resolve({
-        mood_id: data.id,
-        mood_name: data.moodName,
-      });
+      resolve(data);
     })
     .catch((error) => reject(error));
 });
-
-// const getSingleMoodByName = (moodName) => new Promise((resolve, reject) => {
-//   fetch(`${dbUrl}/moods`)
-//     .then((response) => response.json())
-//     .then((data) => {
-//       resolve({
-//         mood_id: data.id,
-//         mood_name: data.moodName,
-//       });
-//     })
-//     .catch((error) => reject(error));
-// });
 
 const deleteSingleMood = (id) => new Promise((resolve, reject) => {
   fetch(`${dbUrl}/moods/${id}`, {
@@ -66,6 +46,5 @@ export {
   createMood,
   getSingleMood,
   deleteSingleMood,
-  // getSingleMoodByName,
   getMoods,
 };

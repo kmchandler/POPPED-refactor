@@ -30,6 +30,21 @@ const createFlickCastCrew = (flickCastCrew) => new Promise((resolve, reject) => 
     .catch((error) => reject(error));
 });
 
+const updateFlickCastCrew = (flickCastCrew) => new Promise((resolve, reject) => {
+  const obj = {
+    id: flickCastCrew.id,
+    flick_id: flickCastCrew.flick_id,
+    cast_crew: flickCastCrew.genre_id,
+  };
+  fetch(`${dbUrl}/flick_cast_crew/${flickCastCrew.id}`, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(obj),
+  })
+    .then((response) => resolve(response))
+    .catch((error) => reject(error));
+});
+
 const getSingleFlickCastCrew = (id) => new Promise((resolve, reject) => {
   fetch(`${dbUrl}/flick_cast_crew/${id}`)
     .then((response) => response.json())
@@ -57,4 +72,5 @@ export {
   getSingleFlickCastCrew,
   deleteSingleFlickCastCrew,
   getFlickCastCrews,
+  updateFlickCastCrew,
 };

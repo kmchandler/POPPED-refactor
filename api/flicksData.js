@@ -3,10 +3,11 @@ import { clientCredentials } from '../utils/client';
 const dbUrl = clientCredentials.databaseURL;
 
 const getFlicksByUid = (uid) => new Promise((resolve, reject) => {
-  fetch(`${dbUrl}/flicks?uid=${uid}"`)
+  fetch(`${dbUrl}/flicks?uid=${uid}`)
+    .then((response) => response.json())
     .then((response) => {
-      if (response.data) {
-        resolve(Object.values(response.data));
+      if (response) {
+        resolve(response);
       } else {
         resolve([]);
       }
@@ -24,7 +25,7 @@ const getSingleFlick = (id) => new Promise((resolve, reject) => {
         type: data.type,
         watched: data.watched,
         favorite: data.favorite,
-        image_url: data.imageUrl,
+        image_url: data.image_url,
         rating: data.rating,
         uid: data.uid,
       });
@@ -38,7 +39,7 @@ const createFlick = (flick) => new Promise((resolve, reject) => {
     type: flick.type,
     watched: flick.watched,
     favorite: flick.favorite,
-    image_url: flick.imageUrl,
+    image_url: flick.image_url,
     rating: flick.rating,
     uid: flick.uid,
   };
@@ -69,11 +70,11 @@ const updateFlick = (flick) => new Promise((resolve, reject) => {
     type: flick.type,
     watched: flick.watched,
     favorite: flick.favorite,
-    image_url: flick.imageUrl,
+    image_url: flick.image_url,
     rating: flick.rating,
     uid: flick.uid,
   };
-  fetch(`${dbUrl}/flicks/${flick.id}.json`, {
+  fetch(`${dbUrl}/flicks/${flick.id}`, {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(flickObj),

@@ -21,12 +21,11 @@ export default function Watchlist() {
     setFlicks(flicksWithMetaData);
     setFilteredFlicks(flicksWithMetaData);
   };
-
   useEffect(() => {
     getGenres().then(setGenres);
     getAllTheFlicks();
   }, [user]);
-
+  console.warn(flicks);
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormInput((prevState) => ({
@@ -36,7 +35,7 @@ export default function Watchlist() {
     if (value === 'none') {
       setFilteredFlicks(flicks);
     } else {
-      const filteredResults = flicks.filter((flick) => flick.genres.some((genre) => genre.genreName === value));
+      const filteredResults = flicks.filter((flick) => flick.genres.some((genre) => genre.genre_name === value));
       setFilteredFlicks(filteredResults);
     }
   };
@@ -45,7 +44,7 @@ export default function Watchlist() {
     <>
       <Head>
         <title>POPPED:watchlist</title>
-        <meta name="description" content="Meta description for the team page" />
+        <meta name="wathlist" content="watchlist page" />
       </Head>;
       <div className="text-center my-4 flickCardsDiv">
         <h1 className="watchlistHeader">watchlist</h1>
@@ -67,11 +66,11 @@ export default function Watchlist() {
             {
             genres.map((genre) => (
               <option
-                key={genre.genreFirebaseKey}
-                value={genre.genreName}
-                id={genre.genreName}
+                key={genre.id}
+                value={genre.genre_name}
+                id={genre.genre_name}
               >
-                {genre.genreName}
+                {genre.genre_name}
               </option>
             ))
           }
@@ -81,7 +80,7 @@ export default function Watchlist() {
           <button type="button" className="flickButton">add a flick</button>
         </Link>
         <div className="d-flex flex-wrap cardContainer watchlistCardDiv">
-          {filteredFlicks.map((flix) => <FlickCard key={flix.flicksFirebaseKey} flickObj={flix} onUpdate={getAllTheFlicks} />)}
+          {filteredFlicks.map((flix) => <FlickCard key={flix.id} flickObj={flix} onUpdate={getAllTheFlicks} />)}
         </div>
       </div>
     </>

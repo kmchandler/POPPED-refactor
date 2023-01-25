@@ -16,8 +16,8 @@ const getFlickMoods = () => new Promise((resolve, reject) => {
 
 const createFlickMoods = (flickMoods) => new Promise((resolve, reject) => {
   const flickMoodsObj = {
-    flick_id: flickMoods.flickId,
-    mood_id: flickMoods.moodId,
+    flick_id: flickMoods.flick_id,
+    mood_id: flickMoods.mood_id,
   };
   fetch(`${dbUrl}/flick_moods`, {
     method: 'POST',
@@ -27,6 +27,21 @@ const createFlickMoods = (flickMoods) => new Promise((resolve, reject) => {
     },
   })
     .then((response) => resolve(response.json()))
+    .catch((error) => reject(error));
+});
+
+const updateFlickMood = (flickMood) => new Promise((resolve, reject) => {
+  const obj = {
+    id: flickMood.id,
+    flick_id: flickMood.flick_id,
+    mood_id: flickMood.mood_id,
+  };
+  fetch(`${dbUrl}/flick_moods/${flickMood.id}`, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(obj),
+  })
+    .then((response) => resolve(response))
     .catch((error) => reject(error));
 });
 
@@ -43,16 +58,11 @@ const getSingleFlickMoods = (id) => new Promise((resolve, reject) => {
     .catch((error) => reject(error));
 });
 
-// UPDATE THIS API CALL TO BE CORRECT
-const getAllMoodsByFlickId = (flickId) => new Promise((resolve, reject) => {
-  fetch(`${dbUrl}/flick_moods/${flickId}`)
+const getAllFlickMoodsByFlickId = (flickId) => new Promise((resolve, reject) => {
+  fetch(`${dbUrl}/flick_moods?flick=${flickId}`)
     .then((response) => response.json())
     .then((data) => {
-      resolve({
-        id: data.id,
-        flick_id: data.flickId,
-        mood_id: data.moodId,
-      });
+      resolve(data);
     })
     .catch((error) => reject(error));
 });
@@ -71,5 +81,6 @@ export {
   getSingleFlickMoods,
   deleteSingleFlickMoods,
   getFlickMoods,
-  getAllMoodsByFlickId,
+  getAllFlickMoodsByFlickId,
+  updateFlickMood,
 };
