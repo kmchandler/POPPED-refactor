@@ -14,13 +14,13 @@ export default function NavBar({ navObj }) {
   const router = useRouter();
 
   const goToProfile = () => {
-    router.push(`/users/${navObj.userFirebaseKey}`);
+    router.push(`/users/${navObj.id}`);
   };
 
   let profileImage = '';
 
-  if (navObj && navObj.imageUrl !== '') {
-    profileImage = navObj.imageUrl;
+  if (navObj && navObj.image_url !== '') {
+    profileImage = navObj.image_url;
   } else {
     profileImage = 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png';
   }
@@ -105,7 +105,7 @@ export default function NavBar({ navObj }) {
 
 NavBar.propTypes = {
   navObj: PropTypes.shape({
-    userFirebaseKey: PropTypes.string,
-    imageUrl: PropTypes.string,
+    id: PropTypes.string,
+    image_url: PropTypes.string,
   }).isRequired,
 };

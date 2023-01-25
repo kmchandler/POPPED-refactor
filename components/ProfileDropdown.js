@@ -5,16 +5,17 @@ import { useAuth } from '../utils/context/authContext';
 
 export default function ProfileDropdown({ userObj }) {
   const { user } = useAuth();
+  console.warn(userObj);
   return (
     <div className="profileDropdown">
-      <img src={userObj.imageUrl} alt={user.displayName} className="profileDropdownPic rounded-circle" />
-      <h5 className="profileName">{user.displayName}</h5>
+      <img src={userObj.image_url} alt={user.username} className="profileDropdownPic rounded-circle" />
+      <h5 className="profileName">{user.username}</h5>
     </div>
   );
 }
 
 ProfileDropdown.propTypes = {
   userObj: PropTypes.shape({
-    imageUrl: PropTypes.string,
+    image_url: PropTypes.string,
   }).isRequired,
 };
