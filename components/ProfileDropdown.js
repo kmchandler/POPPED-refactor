@@ -5,7 +5,6 @@ import { useAuth } from '../utils/context/authContext';
 
 export default function ProfileDropdown({ userObj }) {
   const { user } = useAuth();
-  console.warn(userObj);
   return (
     <div className="profileDropdown">
       <img src={userObj.image_url} alt={user.username} className="profileDropdownPic rounded-circle" />

@@ -16,7 +16,7 @@ export default function Recommendations() {
     const recommendedFlicks = [];
 
     flicksWithMetaData.map((rec) => {
-      if (rec.recommendedBy !== '') {
+      if (rec.recommended_by) {
         recommendedFlicks.push(rec);
       }
     });
@@ -32,8 +32,8 @@ export default function Recommendations() {
       <div className="noRecsDiv">
         <Head>
           <title>POPPED:recommendations</title>
-          <meta name="description" content="Meta description for the team page" />
-        </Head>;
+          <meta name="recommendations" content="Recommendations" />
+        </Head>
         <h1 className="noRecommendationHeader">recommendations</h1>
         <h3 className="noRecommendations">no recommendations found.</h3>
       </div>
@@ -42,11 +42,11 @@ export default function Recommendations() {
     <>
       <Head>
         <title>POPPED:recommendations</title>
-        <meta name="description" content="Meta description for the team page" />
+        <meta name="recommendations" content="Recommendations" />
       </Head>;
       <h1 className="recommendationHeader">recommendations</h1>
       <div className="d-flex flex-wrap cardContainer recommendationCardDiv">
-        {flicks?.map((flix) => <RecommendationCard key={flix.flicksFirebaseKey} flickObj={flix} onUpdate={getRecommendedFlicks} />)}
+        {flicks?.map((flix) => <RecommendationCard key={flix.id} flickObj={flix} onUpdate={getRecommendedFlicks} />)}
       </div>
     </>
   );

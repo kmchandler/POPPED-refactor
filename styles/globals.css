@@ -487,6 +487,7 @@ body {
 .noRecsDiv {
   text-align: center;
   margin-top: 50px;
+  color: #d3dfe1 !important;
 }
 
 .recommendationHeader {

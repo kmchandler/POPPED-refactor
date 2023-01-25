@@ -7,22 +7,22 @@ import ShuffleCard from '../../../components/ShuffleCard';
 export default function WatchThis() {
   const [result, setResult] = useState({});
   const router = useRouter();
-  const { flicksFirebaseKey } = router.query;
+  const { id } = router.query;
 
   const onClick = () => router.push('/shuffle');
 
   useEffect(() => {
-    getSingleFlickWithMetaData(flicksFirebaseKey).then(setResult);
-  }, [flicksFirebaseKey]);
+    getSingleFlickWithMetaData(id).then(setResult);
+  }, [id]);
 
-  if (!result.flicksFirebaseKey) {
+  if (!result.id) {
     return null;
   }
   return (
     <div className="shuffleResultDiv">
       <Head>
         <title>POPPED:watch this</title>
-        <meta name="description" content="Meta description for the team page" />
+        <meta name="watchThis" content="Watch this" />
       </Head>;
       <button className="tryAgainButton" type="button" onClick={onClick}>try again</button>
       <ShuffleCard watchObj={result} />

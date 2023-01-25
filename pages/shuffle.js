@@ -64,11 +64,11 @@ export default function Shuffle() {
   const handleSubmit = () => {
     const flickData = flicks.reduce((acc, flick) => {
       if (checkedGenre.length > 0) {
-        const genreFound = flick.genres.some((genre) => checkedGenre.some((checkedGenreObj) => checkedGenreObj === genre.genreName));
+        const genreFound = flick.genres.some((genre) => checkedGenre.some((checkedGenreObj) => checkedGenreObj === genre.genre_name));
         if (!genreFound) return acc;
       }
       if (checkedMood > 0) {
-        const moodFound = flick.moods.some((mood) => checkedMood.some((checkedMoodObj) => checkedMoodObj === mood.genreName));
+        const moodFound = flick.moods.some((mood) => checkedMood.some((checkedMoodObj) => checkedMoodObj === mood.genre_name));
         if (!moodFound) return acc;
       }
       if (formInput.watched) {
@@ -80,7 +80,7 @@ export default function Shuffle() {
         if (!flickType) return acc;
       }
       if (formInput.recommendedBy) {
-        const recommendation = flick.recommendedBy.includes(formInput.recommendedBy);
+        const recommendation = flick.recommended_by.includes(formInput.recommended_by);
         if (!recommendation) return acc;
       }
       acc.push(flick);
@@ -89,7 +89,7 @@ export default function Shuffle() {
 
     if (flickData.length >= 1) {
       const result = flickData[Math.floor(Math.random() * flickData.length)];
-      router.push(`/flicks/watchThis/${result.flicksFirebaseKey}`);
+      router.push(`/flicks/watchThis/${result.id}`);
     } else if (flickData.length <= 0) {
       router.push('/flicks/tryAgain');
     }
@@ -99,7 +99,7 @@ export default function Shuffle() {
     <form className="shuffleFormDiv" onSubmit={(e) => e.preventDefault()}>
       <Head>
         <title>POPPED:shuffle</title>
-        <meta name="description" content="Meta description for the team page" />
+        <meta name="shuffle" content="Shuffle" />
       </Head>;
       <h1 className="iFeelLike">i feel like watching...</h1>
       <div>
@@ -135,14 +135,14 @@ export default function Shuffle() {
       <h5 className="shuffleGenre">genre</h5>
       <div className="genreDiv">
         {genres.map((genre) => (
-          <div key={genre.genreFirebaseKey} className="mb-3">
+          <div key={genre.id} className="mb-3">
             <Form.Check
               type="checkbox"
-              id={genre.genreFirebaseKey}
-              label={genre.genreName}
-              checked={checkedGenre.indexOf(genre.genreName) >= 0}
+              id={genre.id}
+              label={genre.genre_name}
+              checked={checkedGenre.indexOf(genre.genre_name) >= 0}
               onChange={handleClickGenre}
-              name={genre.genreName}
+              name={genre.genre_name}
             />
           </div>
         ))}
@@ -150,21 +150,21 @@ export default function Shuffle() {
       <h5 className="shuffleMood">mood</h5>
       <div className="moodDiv">
         {moods.map((mood) => (
-          <div key={mood.moodFirebaseKey} className="mb-3">
+          <div key={mood.id} className="mb-3">
             <Form.Check
               type="checkbox"
-              id={mood.moodFirebaseKey}
-              label={mood.moodsName}
-              checked={checkedMood.indexOf(mood.moodsName) >= 0}
+              id={mood.id}
+              label={mood.mood_name}
+              checked={checkedMood.indexOf(mood.mood_name) >= 0}
               onChange={handleClickMood}
-              name={mood.moodsName}
+              name={mood.mood_name}
             />
           </div>
         ))}
       </div>
       <div>
         <div>
-          <input type="text" name="recommendedBy" value={formInput.recommendedBy} className="form-control recommendedByField" placeholder="recommended by" onChange={handleChange} />
+          <input type="text" name="recommendedBy" value={formInput.recommended_by} className="form-control recommendedByField" placeholder="recommended by" onChange={handleChange} />
         </div>
       </div>
       <button className="submitShuffleFormBtn" type="button" onClick={handleSubmit}>shuffle</button>
