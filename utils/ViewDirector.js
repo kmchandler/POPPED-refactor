@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Router from 'next/router';
 import { useAuth } from './context/authContext';
 import Loading from '../components/Loading';
+import Signin from '../components/Signin';
 import NavBar from '../components/NavBar';
 import { getUserByUid } from '../api/userData';
 
@@ -35,7 +36,7 @@ const ViewDirectorBasedOnUserAuthStatus = ({ component: Component, pageProps }) 
     );
   }
 
-  return <Component {...pageProps} />;
+  return <Signin />;
 };
 
 export default ViewDirectorBasedOnUserAuthStatus;

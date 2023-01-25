@@ -17,7 +17,7 @@ export default function Blah() {
     const flicksWithMetaData = await getFlicksByUidWithMetaData(user.uid);
     const flickMoods = [];
     flicksWithMetaData.map((md) => md.moods.filter((mood) => {
-      if (mood.moodsName.includes('blah')) {
+      if (mood.mood_name.includes('blah')) {
         flickMoods.push(md);
       }
     }));
@@ -35,7 +35,7 @@ export default function Blah() {
       <div className="noFlicksDiv">
         <Head>
           <title>POPPED:blah</title>
-          <meta name="description" content="Meta description for the team page" />
+          <meta name="blah" content="blah" />
         </Head>;
 
         <h3 className="noFlicksFound">No flicks found matching this mood.</h3>
@@ -44,9 +44,13 @@ export default function Blah() {
     );
   } return (
     <>
+      <Head>
+        <title>POPPED:blah</title>
+        <meta name="blah" content="blah" />
+      </Head>;
       <button type="button" onClick={onClick} className="backToMoodsBtn foundFlicksBtn">previous page</button>
       <div className="d-flex flex-wrap cardContainer moodsCardsDiv">
-        {flicks?.map((flix) => <FlickCard key={flix.flicksFirebaseKey} flickObj={flix} onUpdate={getBlahFlicks} />)}
+        {flicks?.map((flix) => <FlickCard key={flix.id} flickObj={flix} onUpdate={getBlahFlicks} />)}
       </div>
     </>
   );

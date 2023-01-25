@@ -10,7 +10,7 @@ import { getFlicksByUidWithMetaData } from '../../api/mergedData';
 
   <Head>
     <title>POPPED:heartbroken</title>
-    <meta name="description" content="Meta description for the team page" />
+    <meta name="description" content="heartbroken" />
   </Head>;
 
 export default function Heartbroken() {
@@ -22,7 +22,7 @@ export default function Heartbroken() {
     const flicksWithMetaData = await getFlicksByUidWithMetaData(user.uid);
     const flickMoods = [];
     flicksWithMetaData.map((md) => md.moods.filter((mood) => {
-      if (mood.moodsName.includes('heartbroken')) {
+      if (mood.mood_name.includes('heartbroken')) {
         flickMoods.push(md);
       }
     }));
@@ -40,7 +40,7 @@ export default function Heartbroken() {
       <div className="noFlicksDiv">
         <Head>
           <title>POPPED:happy</title>
-          <meta name="description" content="Meta description for the team page" />
+          <meta name="heartbroken" content="heartbroken" />
         </Head>;
         <h3 className="noFlicksFound">No flicks found matching this mood.</h3>
         <button type="button" onClick={onClick} className="backToMoodsBtn noFlicksBtn">previous page</button>
@@ -50,11 +50,11 @@ export default function Heartbroken() {
     <>
       <Head>
         <title>POPPED:happy</title>
-        <meta name="description" content="Meta description for the team page" />
+        <meta name="heartbroken" content="Meta description for the team page" />
       </Head>;
       <button type="button" onClick={onClick} className="backToMoodsBtn foundFlicksBtn">previous page</button>
       <div className="d-flex flex-wrap cardContainer moodsCardsDiv">
-        {flicks?.map((flix) => <FlickCard key={flix.flicksFirebaseKey} flickObj={flix} onUpdate={getHeartbrokenFlicks} />)}
+        {flicks?.map((flix) => <FlickCard key={flix.id} flickObj={flix} onUpdate={getHeartbrokenFlicks} />)}
       </div>
     </>
   );

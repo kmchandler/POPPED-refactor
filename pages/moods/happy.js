@@ -17,7 +17,7 @@ export default function Happy() {
     const flicksWithMetaData = await getFlicksByUidWithMetaData(user.uid);
     const flickMoods = [];
     flicksWithMetaData.map((md) => md.moods.filter((mood) => {
-      if (mood.moodsName.includes('happy')) {
+      if (mood.mood_name.includes('happy')) {
         flickMoods.push(md);
       }
     }));
@@ -35,7 +35,7 @@ export default function Happy() {
       <div className="noFlicksDiv">
         <Head>
           <title>POPPED:happy</title>
-          <meta name="description" content="Meta description for the team page" />
+          <meta name="happy" content="happy" />
         </Head>;
         <h3 className="noFlicksFound">No flicks found matching this mood.</h3>
         <button type="button" onClick={onClick} className="backToMoodsBtn noFlicksBtn">previous page</button>
@@ -45,11 +45,11 @@ export default function Happy() {
     <>
       <Head>
         <title>POPPED:happy</title>
-        <meta name="description" content="Meta description for the team page" />
+        <meta name="happy" content="happy" />
       </Head>;
       <button type="button" onClick={onClick} className="backToMoodsBtn foundFlicksBtn">previous page</button>
       <div className="d-flex flex-wrap cardContainer moodsCardsDiv">
-        {flicks?.map((flix) => <FlickCard key={flix.flicksFirebaseKey} flickObj={flix} onUpdate={getHappyFlicks} />)}
+        {flicks?.map((flix) => <FlickCard key={flix.id} flickObj={flix} onUpdate={getHappyFlicks} />)}
       </div>
     </>
   );

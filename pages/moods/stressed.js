@@ -17,7 +17,7 @@ export default function Stressed() {
     const flicksWithMetaData = await getFlicksByUidWithMetaData(user.uid);
     const flickMoods = [];
     flicksWithMetaData.map((md) => md.moods.filter((mood) => {
-      if (mood.moodsName.includes('stressed')) {
+      if (mood.mood_name.includes('stressed')) {
         flickMoods.push(md);
       }
     }));
@@ -49,7 +49,7 @@ export default function Stressed() {
       </Head>;
       <button type="button" onClick={onClick} className="backToMoodsBtn foundFlicksBtn">previous page</button>
       <div className="d-flex flex-wrap cardContainer moodsCardsDiv">
-        {flicks?.map((flix) => <FlickCard key={flix.flicksFirebaseKey} flickObj={flix} onUpdate={getStressedFlicks} />)}
+        {flicks?.map((flix) => <FlickCard key={flix.id} flickObj={flix} onUpdate={getStressedFlicks} />)}
       </div>
     </>
   );

@@ -17,7 +17,7 @@ export default function Silly() {
     const flicksWithMetaData = await getFlicksByUidWithMetaData(user.uid);
     const flickMoods = [];
     flicksWithMetaData.map((md) => md.moods.filter((mood) => {
-      if (mood.moodsName.includes('silly')) {
+      if (mood.mood_name.includes('silly')) {
         flickMoods.push(md);
       }
     }));
@@ -50,7 +50,7 @@ export default function Silly() {
       </Head>;
       <button type="button" onClick={onClick} className="backToMoodsBtn foundFlicksBtn">previous page</button>
       <div className="d-flex flex-wrap cardContainer moodsCardsDiv">
-        {flicks?.map((flix) => <FlickCard key={flix.flicksFirebaseKey} flickObj={flix} onUpdate={getSillyFlicks} />)}
+        {flicks?.map((flix) => <FlickCard key={flix.id} flickObj={flix} onUpdate={getSillyFlicks} />)}
       </div>
     </div>
   );
