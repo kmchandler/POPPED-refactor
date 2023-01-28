@@ -68,7 +68,6 @@ body {
   margin-bottom: 50px;
   color: #d3dfe1 !important;
 }
-
 .anxiousIcon {
   justify-self: center;
   height: 200px;
@@ -464,8 +463,6 @@ body {
 
 .watchlistCardDiv {
   margin-top: 30px;
-  margin-left: 110px;
-  margin-right: 100px;
 }
 
 .watchlistSearchbar {

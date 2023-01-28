@@ -13,8 +13,6 @@ function FlickCard({
 }) {
   const [castCrew, setCastCrew] = useState([]);
   const [recs, setRecs] = useState([]);
-  console.warn(castCrew, 'cc');
-  console.warn(recs, 'recs');
 
   const deleteThisFlick = () => {
     if (window.confirm(`Delete ${flickObj.title}?`)) {
@@ -45,7 +43,7 @@ function FlickCard({
             <p className="flickCardGenre">{flickObj.genres?.length > 0 ? 'genres: ' : ''}{flickObj.genres ? flickObj.genres.map((genre, index) => (index ? ', ' : '') + genre?.genre_name) : ''}</p>
             <p className="flickCardMood">{flickObj.moods?.length > 0 ? 'moods: ' : ''}{flickObj.moods ? flickObj.moods.map((mood, index) => (index ? ', ' : '') + mood?.mood_name) : ''}</p>
             <p className="flickCardCastCrew">{castCrew?.length > 0 ? 'cast/crew: ' : ''}{castCrew ? castCrew.map((cc, index) => (index ? ', ' : '') + cc?.cast_crew) : ''}</p>
-            <p className="flickCardRecommendedBy">{recs?.length > 0 ? 'recommended_by: ' : ''}{recs ? recs.map((rb, index) => (index ? ', ' : '') + rb?.recommended_by) : ''}</p>
+            <p className="flickCardRecommendedBy">{recs?.length > 0 ? 'recommended by: ' : ''}{recs ? recs.map((rb, index) => (index ? ', ' : '') + rb?.recommended_by) : ''}</p>
             <div>{flickObj.watched ? <StarRating flickObj={flickObj} /> : null }</div>
           </div>
           <div className="flickCardBtns">
@@ -65,7 +63,7 @@ function FlickCard({
 FlickCard.propTypes = {
   flickObj: PropTypes.shape({
     flick: PropTypes.string,
-    id: PropTypes.string,
+    id: PropTypes.number,
     title: PropTypes.string,
     type: PropTypes.string,
     genres: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string)),
