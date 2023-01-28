@@ -45,19 +45,6 @@ const updateFlickMood = (flickMood) => new Promise((resolve, reject) => {
     .catch((error) => reject(error));
 });
 
-const getSingleFlickMoods = (id) => new Promise((resolve, reject) => {
-  fetch(`${dbUrl}/flick_moods/${id}`)
-    .then((response) => response.json())
-    .then((data) => {
-      resolve({
-        id: data.id,
-        flick_id: data.flickId,
-        mood_id: data.moodId,
-      });
-    })
-    .catch((error) => reject(error));
-});
-
 const getAllFlickMoodsByFlickId = (flickId) => new Promise((resolve, reject) => {
   fetch(`${dbUrl}/flick_moods?flick=${flickId}`)
     .then((response) => response.json())
@@ -78,7 +65,6 @@ const deleteSingleFlickMoods = (id) => new Promise((resolve, reject) => {
 
 export {
   createFlickMoods,
-  getSingleFlickMoods,
   deleteSingleFlickMoods,
   getFlickMoods,
   getAllFlickMoodsByFlickId,

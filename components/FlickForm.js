@@ -10,6 +10,8 @@ import { getGenres, getSingleGenre } from '../api/genresData';
 import { getMoods, getSingleMood } from '../api/moodsData';
 import { createFlickGenre, updateFlickGenre } from '../api/flickGenreData';
 import { createFlickMoods, updateFlickMood } from '../api/flickMoodsData';
+import { createFlickCastCrew } from '../api/flickCastCrewData';
+import { createFlickRecommendedBy } from '../api/flickRecommendedByData';
 
 const initialState = {
   title: '',
@@ -18,7 +20,7 @@ const initialState = {
   recommended_by: '',
   watched: false,
   favorite: false,
-  imageUrl: '',
+  image_url: '',
   rating: '',
 };
 
@@ -53,8 +55,8 @@ function FlickForm({ obj }) {
     e.preventDefault();
     if (obj.id) {
       updateFlick(formInput).then((flick) => {
-        const genrePromise = updateFlickGenre(flick, checkedGenre);
-        const moodsPromise = updateFlickMood(flick, checkedMood);
+        const genrePromise = checkedGenre.map((genre) => updateFlickGenre(flick, genre));
+        const moodsPromise = checkedMood.map((mood) => updateFlickMood(flick, mood));
 
         Promise.all([moodsPromise, genrePromise]).then(() => router.push('/flicks/watchlist'));
       });
@@ -63,19 +65,22 @@ function FlickForm({ obj }) {
       createFlick(payload).then((flick) => {
         const genrePromises = checkedGenre.map((genre) => (
           getSingleGenre(genre.id).then((genreObj) => {
-            const flickGenreObj = { flick_id: flick.id, genre_id: genreObj.genre_id };
+            const flickGenreObj = { flick_id: flick.id, genre_id: genreObj.id };
             return createFlickGenre(flickGenreObj);
           })
         ));
 
         const moodPromises = checkedMood.map((mood) => (
           getSingleMood(mood.id).then((moodObj) => {
-            const flickMoodObj = { flick_id: flick.id, mood_id: moodObj.mood_id };
+            const flickMoodObj = { flick_id: flick.id, mood_id: moodObj.id };
             return createFlickMoods(flickMoodObj);
           })
         ));
+        const flickCastCrewPromises = createFlickCastCrew(formInput.cast_crew, flick.id);
 
-        Promise.all([...genrePromises, ...moodPromises])
+        const flickRecommendedByPromises = createFlickRecommendedBy(formInput.recommended_by, flick.id);
+
+        Promise.all([...genrePromises, ...moodPromises, ...flickCastCrewPromises, ...flickRecommendedByPromises])
           .then(() => router.push('/flicks/watchlist'));
       });
     }

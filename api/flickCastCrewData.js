@@ -14,21 +14,22 @@ const getFlickCastCrews = () => new Promise((resolve, reject) => {
     .catch((error) => reject(error));
 });
 
-const createFlickCastCrew = (flickCastCrew) => new Promise((resolve, reject) => {
-  const flickCastCrewObj = {
-    flick_id: flickCastCrew.flickId,
-    cast_crew: flickCastCrew.castCrew,
-  };
-  fetch(`${dbUrl}/flick_cast_crew`, {
-    method: 'POST',
-    body: JSON.stringify(flickCastCrewObj),
-    headers: {
-      'content-type': 'application/json',
-    },
-  })
-    .then((response) => resolve(response.json()))
-    .catch((error) => reject(error));
-});
+const createFlickCastCrew = (flickCastCrew, flickId) => {
+  const splitCastCrew = flickCastCrew.split(', ');
+  return splitCastCrew.map((castCrew) => {
+    const flickCastCrewObj = {
+      flick_id: flickId,
+      cast_crew: castCrew,
+    };
+    return fetch(`${dbUrl}/flick_cast_crews`, {
+      method: 'POST',
+      body: JSON.stringify(flickCastCrewObj),
+      headers: {
+        'content-type': 'application/json',
+      },
+    });
+  });
+};
 
 const updateFlickCastCrew = (flickCastCrew) => new Promise((resolve, reject) => {
   const obj = {
@@ -58,6 +59,15 @@ const getSingleFlickCastCrew = (id) => new Promise((resolve, reject) => {
     .catch((error) => reject(error));
 });
 
+const getAllFlickCastCrewsByFlickId = (flickId) => new Promise((resolve, reject) => {
+  fetch(`${dbUrl}/flick_cast_crews?flick=${flickId}`)
+    .then((response) => response.json())
+    .then((data) => {
+      resolve(data);
+    })
+    .catch((error) => reject(error));
+});
+
 const deleteSingleFlickCastCrew = (id) => new Promise((resolve, reject) => {
   fetch(`${dbUrl}/flick_cast_crew/${id}`, {
     method: 'DELETE',
@@ -73,4 +83,5 @@ export {
   deleteSingleFlickCastCrew,
   getFlickCastCrews,
   updateFlickCastCrew,
+  getAllFlickCastCrewsByFlickId,
 };

@@ -3,7 +3,7 @@ import { clientCredentials } from '../utils/client';
 const dbUrl = clientCredentials.databaseURL;
 
 const getFlickRecommendedBy = () => new Promise((resolve, reject) => {
-  fetch(`${dbUrl}/flick_recommended_by`)
+  fetch(`${dbUrl}/flick_recommended_bys`)
     .then((response) => {
       if (response.data) {
         resolve(Object.values(response.data));
@@ -14,24 +14,26 @@ const getFlickRecommendedBy = () => new Promise((resolve, reject) => {
     .catch((error) => reject(error));
 });
 
-const createFlickRecommendedBy = (flickRecommendedBy) => new Promise((resolve, reject) => {
-  const flickRecommendedByObj = {
-    flick_id: flickRecommendedBy.flickId,
-    recommended_by: flickRecommendedBy.recommendedBy,
-  };
-  fetch(`${dbUrl}/flick_recommended_by`, {
-    method: 'POST',
-    body: JSON.stringify(flickRecommendedByObj),
-    headers: {
-      'content-type': 'application/json',
-    },
-  })
-    .then((response) => resolve(response.json()))
-    .catch((error) => reject(error));
-});
+const createFlickRecommendedBy = (flickRecommendedBy, flickId) => {
+  console.warn(flickRecommendedBy, 'frb');
+  const splitRecommendedBy = flickRecommendedBy.split(', ');
+  return splitRecommendedBy.map((recommendedBy) => {
+    const flickRecommendedByObj = {
+      flick_id: flickId,
+      recommended_by: recommendedBy,
+    };
+    return fetch(`${dbUrl}/flick_recommended_bys`, {
+      method: 'POST',
+      body: JSON.stringify(flickRecommendedByObj),
+      headers: {
+        'content-type': 'application/json',
+      },
+    });
+  });
+};
 
 const getSingleFlickRecommendedBy = (id) => new Promise((resolve, reject) => {
-  fetch(`${dbUrl}/flick_recommended_by/${id}`)
+  fetch(`${dbUrl}/flick_recommended_bys/${id}`)
     .then((response) => response.json())
     .then((data) => {
       resolve({
@@ -43,8 +45,17 @@ const getSingleFlickRecommendedBy = (id) => new Promise((resolve, reject) => {
     .catch((error) => reject(error));
 });
 
+const getAllFlickRecommendedBysByFlickId = (flickId) => new Promise((resolve, reject) => {
+  fetch(`${dbUrl}/flick_recommended_bys?flick=${flickId}`)
+    .then((response) => response.json())
+    .then((data) => {
+      resolve(data);
+    })
+    .catch((error) => reject(error));
+});
+
 const deleteSingleFlickRecommendedBy = (id) => new Promise((resolve, reject) => {
-  fetch(`${dbUrl}/flick_recommended_by/${id}`, {
+  fetch(`${dbUrl}/flick_recommended_bys/${id}`, {
     method: 'DELETE',
     headers: { 'Content-Type': 'application/json' },
   })
@@ -57,4 +68,5 @@ export {
   getSingleFlickRecommendedBy,
   deleteSingleFlickRecommendedBy,
   getFlickRecommendedBy,
+  getAllFlickRecommendedBysByFlickId,
 };
