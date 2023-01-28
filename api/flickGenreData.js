@@ -36,7 +36,7 @@ const updateFlickGenre = (flickGenre) => new Promise((resolve, reject) => {
     flick_id: flickGenre.flick_id,
     genre_id: flickGenre.genre_id,
   };
-  fetch(`${dbUrl}/flick_genre/${flickGenre.id}`, {
+  fetch(`${dbUrl}/flick_genres/${flickGenre.id}`, {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(obj),

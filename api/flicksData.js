@@ -79,7 +79,7 @@ const updateFlick = (flick) => new Promise((resolve, reject) => {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(flickObj),
   })
-    .then((response) => resolve(response))
+    .then((response) => resolve(response.json()))
     .catch((error) => reject(error));
 });
 
